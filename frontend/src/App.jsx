@@ -1,10 +1,13 @@
 import React from 'react'
+import {Box, Container} from "@mui/material"
 
 const App = () => {
   return (
-    <div>
-      
-    </div>
+    <Container disableGutters={true} maxWidth={"xl"}>
+      <Box sx={{ backgroundColor:"#D9D9D9", height:"100vh"}}>
+          
+      </Box>
+    </Container>
   )
 }
 
