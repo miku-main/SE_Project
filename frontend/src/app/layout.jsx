@@ -18,16 +18,17 @@ const Layout = ({children}) => {
 
   const innerLayoutStyle = {
     display:"flex",
-    justifyContent:"center"
+    justifyContent:"center",
+    height:"100%"
   }
 
   return (
     <html>
       <body>
-        <Container disableGutters={true} maxWidth={"xl"}>
+        <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={"xl"}>
           <Box sx={layoutStyle}>
             <Box sx={innerLayoutStyle}>
-              <Box>
+              <Box sx={{height:"inherit", overflowY:"auto"}}>
                 {children}
               </Box>
               <Box sx={navigatorContainerStyle}>

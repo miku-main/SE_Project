@@ -11,7 +11,6 @@ const Home = () => {
 
     return (
         <Box sx={{height:"inherit"}}>
-
             <Box sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                 <Box sx={{marginTop:"1rem", marginBottom:"2rem"}}>
                     <Search/>
