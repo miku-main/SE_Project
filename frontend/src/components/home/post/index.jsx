@@ -14,7 +14,7 @@ const Post = ({description,username}) => {
         <Box>
             <Box sx={{display:"flex"}}>
                 <Box>
-                    <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:"20rem"}}>
+                    <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:"20rem", cursor:"pointer"}}>
                         <CardHeader avatar={
                             <Avatar sx={{bgcolor:"#FAADAD"}}>
                                 A
