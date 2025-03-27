@@ -29,7 +29,7 @@ const Home = () => {
                     <Box sx={{marginBottom:"2%"}}>
                         <Search/>
                     </Box>
-                    <Box sx={{display:"flex", justifyContent:"space-between", float:"left"}}>
+                    <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
                         <Box sx={{marginRight:"10%"}}>
                             <Dropdown handleChange={(event) => handleChange("country",event.target.value)} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
                         </Box>
