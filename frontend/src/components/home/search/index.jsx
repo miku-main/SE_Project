@@ -3,7 +3,7 @@ import {InputBase, Box} from "@mui/material";
 
 const Search = () => {
     const searchContainerStyle = {
-        width:"40rem",
+        width:"60rem",
         backgroundColor:"#FFFFFF",
         borderRadius:"1.5rem",
         padding:"2%"
