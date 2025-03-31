@@ -36,7 +36,7 @@ const Navigator = () => {
             height:"fit-content", 
             padding:"0.5rem", 
             borderRadius:"100%", 
-            backgroundColor:pathname === `/${page}` ? "#824D4D" :"transparent"
+            backgroundColor:pathname.split("/")[1] === `${page}` ? "#824D4D" :"transparent"
         }
     }
     
