@@ -4,17 +4,32 @@ import { Avatar, CardContent, CardHeader, CardMedia, Typography, Box, Card, Butt
 import React, { useState } from "react";
 import Heart from "./assets/heart";
 import Bookmark from "./assets/bookmark";
+import Link from 'next/link';
 
-const Post = ({description,username}) => {
+
+const Post = ({description,username, width, imageHeight, type}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
 
+
+    const postType = () => {
+        if(type === "home"){
+            return (
+                <Link href={{pathname:"/home/post", query:{id:"1234"}}}>
+                    <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
+                </Link> 
+            )
+        }
+        else if(type === "post"){
+            return <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
+        }
+    }
     return (
         <Box>
             <Box sx={{display:"flex"}}>
                 <Box>
-                    <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:"20rem", cursor:"pointer"}}>
+                    <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:width}}>
                         <CardHeader avatar={
                             <Avatar sx={{bgcolor:"#FAADAD"}}>
                                 A
@@ -25,9 +40,11 @@ const Post = ({description,username}) => {
                                 <Button sx={{backgroundColor:"#FAADAD", color:"white", width:"7rem", marginLeft:"1rem"}}>Follow</Button>
                             }
                         />
-                        <CardMedia sx={{border:"1px solid red"}} component={"img"} height={"180"} alt="post"/>
+
+                        
+                        {postType(type)}
                         <CardContent sx={{overflowWrap:"break-word"}}>
-                            <Typography variant="body2">
+                            <Typography variant="body1">
                                 {description}
                             </Typography>
                         </CardContent>

@@ -55,7 +55,7 @@ const Home = () => {
                             return (
                                 <Grid2  item size={{ xs: 2, sm: 4, md: 4 }}>
                                     <Box sx={{margin:"auto", width:"fit-content"}}>
-                                        <Post description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsa"} username={"Username"}/>
+                                        <Post type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsa"} username={"Username"}/>
                                     </Box>
                                 </Grid2>
                             )
