@@ -19,7 +19,8 @@ const Layout = ({children}) => {
   const innerLayoutStyle = {
     display:"flex",
     justifyContent:"center",
-    height:"100%"
+    height:"100%",
+    width:"100%"
   }
 
   return (
@@ -28,7 +29,7 @@ const Layout = ({children}) => {
         <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={"xl"}>
           <Box sx={layoutStyle}>
             <Box sx={innerLayoutStyle}>
-              <Box sx={{height:"inherit", overflowY:"auto"}}>
+              <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
                 {children}
               </Box>
               <Box sx={navigatorContainerStyle}>
