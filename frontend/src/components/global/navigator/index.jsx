@@ -4,7 +4,7 @@ import { Box, ButtonBase } from "@mui/material";
 import Link from 'next/link';
 import React from "react";
 import Home from "./assets/Home";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Post from "./assets/Post";
 import Bookmark from "./assets/Bookmark";
 import Profile from "./assets/Profile";
@@ -12,6 +12,7 @@ import Group from "./assets/Group";
 
 const Navigator = () => {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     const containerStyle = {
         width:"100%",
@@ -31,13 +32,12 @@ const Navigator = () => {
     }
 
     const linkButtonStyle = (page) => {
-        console.log(pathname);
         return {
             width:"fit-content",
             height:"fit-content", 
             padding:"0.5rem", 
             borderRadius:"100%", 
-            backgroundColor:pathname.split("/")[1] === `${page}` && pathname.split("?").length < 1 ? "#824D4D" :"transparent"
+            backgroundColor:pathname.split("/")[1] === `${page}` &&  (!searchParams.has("id") && !searchParams.has("username"))? "#824D4D" :"transparent"
         }
     }
     
