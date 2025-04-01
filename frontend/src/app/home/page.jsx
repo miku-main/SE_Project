@@ -51,9 +51,9 @@ const Home = () => {
 
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {Array(6).fill(1).map(() => {
+                        {Array(6).fill(1).map((_,index) => {
                             return (
-                                <Grid2  item size={{ xs: 2, sm: 4, md: 4 }}>
+                                <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                     <Box sx={{margin:"auto", width:"fit-content"}}>
                                         <Post type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsa"} username={"Username"}/>
                                     </Box>
