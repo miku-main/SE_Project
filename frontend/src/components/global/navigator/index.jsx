@@ -37,7 +37,7 @@ const Navigator = () => {
             height:"fit-content", 
             padding:"0.5rem", 
             borderRadius:"100%", 
-            backgroundColor:pathname.split("/")[1] === `${page}` &&  (!searchParams.has("id") && !searchParams.has("username"))? "#824D4D" :"transparent"
+            backgroundColor:pathname.split("/")[1] === `${page}` &&  (!searchParams.has("username"))? "#824D4D" :"transparent"
         }
     }
     
