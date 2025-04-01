@@ -7,7 +7,7 @@ import Bookmark from "./assets/bookmark";
 import Link from 'next/link';
 
 
-const Post = ({description,username, width, imageHeight, type}) => {
+const Post = ({description,username, width, imageHeight, type, isFromFollowedUser}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
@@ -37,7 +37,7 @@ const Post = ({description,username, width, imageHeight, type}) => {
                             }
                             title={username}
                             action={
-                                <Button sx={{backgroundColor:"#FAADAD", color:"white", width:"7rem", marginLeft:"1rem"}}>Follow</Button>
+                               isFromFollowedUser ? <></> : <Button sx={{backgroundColor:"#FAADAD", color:"white", width:"7rem", marginLeft:"1rem"}}>Follow</Button>
                             }
                         />
 

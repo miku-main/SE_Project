@@ -24,7 +24,7 @@ const PostPage = () => {
             </Box>
             <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", width:"inherit"}}>
                 <Box sx={{ width:"40rem", marginBottom:"1%"}}>
-                    <Post type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsads"} username={"Username"}/>
+                    <Post isFromFollowedUser={true} type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsads"} username={"Username"}/>
                 </Box>
                 <Box sx={{ width:"40rem", marginBottom:"2%"}}>
                     <Typography sx={{marginBottom:"2%"}} color="white" variant={"h5"}>Ingredients</Typography>
