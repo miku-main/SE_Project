@@ -1,9 +1,11 @@
 "use client"
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, ButtonBase } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import Post from "../../../components/home/post";
 import Ingredients from "../../../components/home/post/ingredients";
 import Steps from "../../../components/home/post/steps";
+import Link from "next/link";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const list = ["A","B","C","D","E","F"];
 const steps = ["A","B","C","D","E","F"];
@@ -13,6 +15,13 @@ const PostPage = () => {
     
     return (
         <Box width={"inherit"}>
+            <Box sx={{marginLeft:"5%", marginTop:"2%"}}>
+                <Link href="/home">
+                    <ButtonBase>
+                        <Typography><KeyboardBackspaceIcon sx={{color:"#FAADAD"}} fontSize="large"/></Typography>
+                    </ButtonBase>
+                </Link>
+            </Box>
             <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", width:"inherit"}}>
                 <Box sx={{ width:"40rem", marginBottom:"1%"}}>
                     <Post type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsasadsadsadsadsads"} username={"Username"}/>
