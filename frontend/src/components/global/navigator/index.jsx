@@ -31,12 +31,13 @@ const Navigator = () => {
     }
 
     const linkButtonStyle = (page) => {
+        console.log(pathname);
         return {
             width:"fit-content",
             height:"fit-content", 
             padding:"0.5rem", 
             borderRadius:"100%", 
-            backgroundColor:pathname.split("/")[1] === `${page}` ? "#824D4D" :"transparent"
+            backgroundColor:pathname.split("/")[1] === `${page}` && pathname.split("?").length < 1 ? "#824D4D" :"transparent"
         }
     }
     

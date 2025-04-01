@@ -31,9 +31,11 @@ const Post = ({description,username, width, imageHeight, type, isFromFollowedUse
                 <Box>
                     <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:width}}>
                         <CardHeader avatar={
-                            <Avatar sx={{bgcolor:"#FAADAD"}}>
-                                A
-                            </Avatar>
+                            <Link href={{pathname:"/profile", query:{username:"1234"}}}>
+                                <Avatar sx={{bgcolor:"#FAADAD", cursor:"pointer"}}>
+                                    A
+                                </Avatar>
+                            </Link>
                             }
                             title={username}
                             action={
