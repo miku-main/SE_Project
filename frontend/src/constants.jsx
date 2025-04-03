@@ -49,3 +49,26 @@ export const listOfIngredients = [
     "Milk",
     "Cream"
 ]
+
+export const postData = [
+    { id: 1, username: "randomUser1", likes: 10, description: "A classic Italian dish made with layers of pasta, meat sauce, and melted cheese.", title: "Lasagna", followed: true },
+    { id: 2, username: "tech_guy42", likes: 25, description: "A crispy, golden fried chicken served with a side of creamy mashed potatoes.", title: "Fried Chicken", followed: false },
+    { id: 3, username: "bookworm99", likes: 34, description: "Thinly sliced raw fish served with soy sauce, wasabi, and pickled ginger.", title: "Sushi", followed: true },
+    { id: 4, username: "coffee_lover", likes: 50, description: "Soft and fluffy bread rolls, often served with butter or jam.", title: "Dinner Rolls", followed: false },
+    { id: 5, username: "guitarhero22", likes: 12, description: "A creamy soup made with pureed potatoes and leeks, served warm.", title: "Potato Leek Soup", followed: true },
+    { id: 6, username: "nature_lover", likes: 45, description: "Juicy steak grilled to perfection, served with your choice of sides.", title: "Grilled Steak", followed: false },
+    { id: 7, username: "city_slicker", likes: 18, description: "A rich and creamy dessert made from chocolate, eggs, and cream, served chilled.", title: "Chocolate Mousse", followed: true },
+    { id: 8, username: "running_man", likes: 21, description: "A fresh mix of lettuce, tomatoes, cucumbers, and a tangy vinaigrette dressing.", title: "Caesar Salad", followed: false },
+    { id: 9, username: "art_fanatic", likes: 27, description: "A flavorful curry dish made with marinated chicken, spices, and a creamy sauce.", title: "Butter Chicken", followed: true },
+    { id: 10, username: "traveller88", likes: 32, description: "Soft noodles stir-fried with vegetables, soy sauce, and your choice of protein.", title: "Chow Mein", followed: false },
+    { id: 11, username: "gamer_x", likes: 13, description: "Fluffy pancakes topped with syrup, butter, and a sprinkle of powdered sugar.", title: "Pancakes", followed: true },
+    { id: 12, username: "movie_buff", likes: 40, description: "Thinly sliced cured meats, cheeses, olives, and bread served as an appetizer.", title: "Antipasto", followed: false },
+    { id: 13, username: "music_lover", likes: 29, description: "Tender shrimp cooked in a garlic butter sauce with a hint of lemon.", title: "Garlic Butter Shrimp", followed: true },
+    { id: 14, username: "diy_master", likes: 8, description: "A soft cheese dish made from fresh ricotta, served with herbs and a drizzle of honey.", title: "Ricotta Cheese", followed: false },
+    { id: 15, username: "history_buff", likes: 22, description: "A delicious Italian pasta dish made with a creamy sauce, peas, and bacon.", title: "Carbonara", followed: true },
+    { id: 16, username: "techie24", likes: 36, description: "A hearty soup made with tomatoes, basil, and a touch of cream.", title: "Tomato Basil Soup", followed: false },
+    { id: 17, username: "fitness_freak", likes: 17, description: "A sandwich made with fresh tuna, mayo, and vegetables on whole-grain bread.", title: "Tuna Sandwich", followed: true },
+    { id: 18, username: "photography_geek", likes: 23, description: "A rich and tangy dip made with mashed avocado, lime, cilantro, and spices.", title: "Guacamole", followed: false },
+    { id: 19, username: "world_traveller", likes: 31, description: "A dish made with grilled shrimp, corn, and spicy seasoning, often served in a bowl.", title: "Shrimp Tacos", followed: true },
+    { id: 20, username: "design_enthusiast", likes: 50, description: "A layered cake made with rich chocolate, cream, and decorated with berries.", title: "Chocolate Cake", followed: false }
+  ];
