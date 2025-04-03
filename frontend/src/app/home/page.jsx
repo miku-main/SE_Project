@@ -5,7 +5,7 @@ import Search from "../../components/home/search";
 import Post from "../../components/home/post";
 import { useState } from "react";
 import Dropdown from "../../components/global/dropdown";
-import {listOfCountries, listOfIngredients} from "../../constants";
+import {listOfCountries, listOfIngredients, postData} from "../../constants";
 const Home = () => {
 
     const [followingActive, setFollowingActive] = useState(false)
@@ -29,14 +29,16 @@ const Home = () => {
                 return (
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {Array(6).fill(1).map((_,index) => {
-                            return (
-                                <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
-                                    <Box sx={{margin:"auto", width:"fit-content"}}>
-                                        <Post isFromFollowedUser={false} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsa"} username={"Username"}/>
-                                    </Box>
-                                </Grid2>
-                            )
+                        {postData.map((post,index) => {
+                            if(!post.followed){
+                                return (
+                                    <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
+                                        <Box sx={{margin:"auto", width:"fit-content"}}>
+                                            <Post isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                        </Box>
+                                    </Grid2>
+                                )
+                            }
                         })}
                     </Grid2>
                 </Box>
@@ -46,14 +48,16 @@ const Home = () => {
             return(
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {Array(6).fill(1).map((_,index) => {
-                            return (
-                                <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
-                                    <Box sx={{margin:"auto", width:"fit-content"}}>
-                                        <Post isFromFollowedUser={true} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={"sadsadsadsadsadsadsadsadsadsadsadsafdsfsadsadsafdsafsadsa"} username={"Username"}/>
-                                    </Box>
-                                </Grid2>
-                            )
+                        {postData.map((post,index) => {
+                            if(post.followed){
+                                return (
+                                    <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
+                                        <Box sx={{margin:"auto", width:"fit-content"}}>
+                                            <Post isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                        </Box>
+                                    </Grid2>
+                                )
+                            }
                         })}
                     </Grid2>
                 </Box>
