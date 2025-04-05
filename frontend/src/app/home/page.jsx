@@ -3,7 +3,7 @@
 import { Box, Grid2, Switch, Typography, Button } from "@mui/material";
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Dropdown from "../../components/global/dropdown";
 import {listOfCountries, listOfIngredients, postData} from "../../constants";
 const Home = () => {
@@ -13,7 +13,10 @@ const Home = () => {
     const [selectedCountryList, setSelectedCountryList] = useState([]);
     const [selectedIngredientList, setSelectedIngredientList] = useState([]);
 
-
+    const [searchedPosts,setSearchedPosts] = useState(postData);
+    const postTitles = useRef(postData.filter((post) => !post.followed).map((post) => {
+        return post.title;
+    }))
 
     const handleChange = (type,data) => {
         if(type === "country"){
@@ -24,12 +27,20 @@ const Home = () => {
         }
     }
 
+    const handleSearchChange = (searchedData) => {
+        setSearchedPosts(postData.map((post) => {
+            if(searchedData.indexOf(post.title) !== -1){
+                return post;
+            }
+        }))
+    }
+
     const currentScreen = (screenName) => {
         if(screenName === "Global"){
                 return (
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {postData.map((post,index) => {
+                        {searchedPosts.map((post,index) => {
                             if(!post.followed){
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
@@ -48,7 +59,7 @@ const Home = () => {
             return(
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {postData.map((post,index) => {
+                        {searchedPosts.map((post,index) => {
                             if(post.followed){
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
@@ -69,7 +80,7 @@ const Home = () => {
             <Box sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                 <Box sx={{width:"fit-content", marginBottom:"1%",marginTop:"2%"}}>
                     <Box sx={{marginBottom:"2%"}}>
-                        <Search/>
+                        <Search handleChange={handleSearchChange} data={postTitles.current}/>
                     </Box>
                     <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
                         <Box sx={{marginRight:"10%"}}>
@@ -83,9 +94,15 @@ const Home = () => {
                 <Box sx={{width:"100%", marginBottom:"1rem"}}>
                     <Box sx={{display:"flex", float:"right", marginRight:"2%"}}>
                         <Button onClick={() => {
+                            postTitles.current = postData.filter((post) => post.followed).map((post) => {
+                                return post.title;
+                            })
                             setFollowingActive(true);
                         }} sx={{color:"white", backgroundColor: followingActive ? "#FAADAD" : "rgba(250,173,173,0.5)", borderTopRightRadius:"0", borderBottomRightRadius:"0"}}>Following</Button>
                         <Button onClick={() => {
+                            postTitles.current = postData.filter((post) => !post.followed).map((post) => {
+                                return post.title;
+                            })
                             setFollowingActive(false);
                         }} sx={{color:"white", backgroundColor: followingActive ? "rgba(250,173,173,0.5)" :"#FAADAD" ,borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}}>Global</Button>
                     </Box>
