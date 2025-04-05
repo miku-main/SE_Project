@@ -28,11 +28,14 @@ const Home = () => {
     }
 
     const handleSearchChange = (searchedData) => {
-        setSearchedPosts(postData.map((post) => {
+    
+        const result = [];
+        postData.map((post) => {
             if(searchedData.indexOf(post.title) !== -1){
-                return post;
+                result.push(post);
             }
-        }))
+        })
+        setSearchedPosts(result)
     }
 
     const currentScreen = (screenName) => {
@@ -40,6 +43,7 @@ const Home = () => {
                 return (
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
+                    
                         {searchedPosts.map((post,index) => {
                             if(!post.followed){
                                 return (

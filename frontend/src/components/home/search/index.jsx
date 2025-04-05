@@ -30,26 +30,31 @@ const Search = ({data, handleChange}) => {
         let fields = [];
 
         console.log(data);
-        data.forEach((item) => {
-            let matched = false;
-            for(let a = 0, b = 0; a < item.length; a++){
-                if(item.toUpperCase().charAt(a) === input.toUpperCase().charAt(b)){
-                    matched = true;
-                    b++;
-                    if(input.length == b){
-                        break;
-                    } 
-                }
-                else{
-                    matched = false;
-                    break;
-                }
-            }
-            if(matched){
-                fields.push(item);
-            }
-        })
 
+        if(input.length === 0) {
+            return data;
+        }
+        else{
+            data.forEach((item) => {
+                let matched = false;
+                for(let a = 0, b = 0; a < item.length; a++){
+                    if(item.toUpperCase().charAt(a) === input.toUpperCase().charAt(b)){
+                        matched = true;
+                        b++;
+                        if(input.length == b){
+                            break;
+                        } 
+                    }
+                    else{
+                        matched = false;
+                        break;
+                    }
+                }
+                if(matched){
+                    fields.push(item);
+                }
+            })
+        }
         console.log(fields);
         return fields;
     }
