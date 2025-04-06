@@ -39,7 +39,7 @@ const Post = ({description,username, width, imageHeight, type, isFromFollowedUse
                         <CardHeader avatar={
                             <Link href={{pathname:"/profile", query:{username:"1234"}}}>
                                 <Avatar sx={{bgcolor:"#FAADAD", cursor:"pointer"}}>
-                                    A
+                                    {username.toUpperCase().charAt(0)}
                                 </Avatar>
                             </Link>
                             }
