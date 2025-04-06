@@ -1,7 +1,11 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import '../../src/index.css';
 import {Box, Container} from "@mui/material"
 import Navigator from '../components/global/navigator';
+import { AppContext } from './contexts';
+
 
 
 const Layout = ({children}) => {
@@ -23,21 +27,52 @@ const Layout = ({children}) => {
     width:"100%"
   }
 
+
+  const [selectedPost, setSelectedPost] = useState({
+    title:"",
+    description:"",
+    username:""
+  })
+  const appSettings = {
+    post:{
+      changeCurrent: ({title,description,username}) => {
+        setSelectedPost({
+          title,
+          description,
+          username
+        })
+      },
+      current:selectedPost
+    }
+  }
+  // const [appInfo, setAppInfo] = useState({
+  //   post:{
+  //     changeCurrent: () => {},
+  //     current:{
+  //       username:"",
+  //       description:"",
+  //       title:""
+  //     }
+  //   }
+  // });
+
   return (
     <html>
       <body>
-        <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={"xl"}>
-          <Box sx={layoutStyle}>
-            <Box sx={innerLayoutStyle}>
-              <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
-                {children}
-              </Box>
-              <Box sx={navigatorContainerStyle}>
-                <Navigator/>
+        <AppContext.Provider value={appSettings}>
+          <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={"xl"}>
+            <Box sx={layoutStyle}>
+              <Box sx={innerLayoutStyle}>
+                <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
+                  {children}
+                </Box>
+                <Box sx={navigatorContainerStyle}>
+                  <Navigator/>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Container>
+          </Container>
+        </AppContext.Provider>
       </body>
     </html>
   )

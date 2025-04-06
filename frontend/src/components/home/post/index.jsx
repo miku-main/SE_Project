@@ -1,22 +1,28 @@
 "use client"
 
 import { Avatar, CardContent, CardHeader, CardMedia, Typography, Box, Card, Button, ButtonBase } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Heart from "./assets/heart";
 import Bookmark from "./assets/bookmark";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import { AppContext } from "../../../app/contexts";
 
 
-const Post = ({description,username, width, imageHeight, type, isFromFollowedUser}) => {
+const Post = ({description,username, width, imageHeight, type, isFromFollowedUser, title}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
+
+    const appInfo = useContext(AppContext);
 
 
     const postType = () => {
         if(type === "home"){
             return (
-                <Link href={{pathname:"/home/post", query:{id:"1234"}}}>
+                <Link onClick={() => {
+                    appInfo.post.changeCurrent({title,description,username});
+                }} href={{pathname:"/home/post", query:{id:"1234"}}} as={`/home/post?id=${1234}`}>
                     <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
                 </Link> 
             )
@@ -46,6 +52,9 @@ const Post = ({description,username, width, imageHeight, type, isFromFollowedUse
                         
                         {postType(type)}
                         <CardContent sx={{overflowWrap:"break-word"}}>
+                            <Typography gutterBottom variant="h5" component={"div"}>
+                                {title}
+                            </Typography>
                             <Typography variant="body1">
                                 {description}
                             </Typography>
