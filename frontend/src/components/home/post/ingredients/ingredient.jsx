@@ -8,7 +8,7 @@ const Ingredient = ({name}) => {
         <Box>
             <Box sx={{display:"flex"}}>
                 <Box sx={{height:"4rem",display:"flex", alignItems:"center", justifyContent:"center" ,width:"20rem", backgroundColor:"#FAADAD", marginRight:"2%"}}>
-                    <Typography>
+                    <Typography color="white">
                         {name}
                     </Typography>
                 </Box>
