@@ -14,7 +14,7 @@ const steps = ["A","B","C","D","E","F"];
 const PostPage = () => {
     
     const appInfo = useContext(AppContext);
-    const {title , description, username} = appInfo.post.current;
+    const {title , description, username, steps, ingredients} = appInfo.post.current;
     
     return (
         <Box width={"inherit"}>
@@ -31,7 +31,7 @@ const PostPage = () => {
                 </Box>
                 <Box sx={{ width:"40rem", marginBottom:"2%"}}>
                     <Typography sx={{marginBottom:"2%"}} color="white" variant={"h5"}>Ingredients</Typography>
-                    <Ingredients list={list}/>
+                    <Ingredients list={ingredients}/>
                 </Box>
 
                 <Box sx={{ width:"40rem"}}>

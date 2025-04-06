@@ -31,15 +31,19 @@ const Layout = ({children}) => {
   const [selectedPost, setSelectedPost] = useState({
     title:"",
     description:"",
-    username:""
+    username:"",
+    steps:[],
+    ingredients:[]
   })
   const appSettings = {
     post:{
-      changeCurrent: ({title,description,username}) => {
+      changeCurrent: ({title,description,username,ingredients,steps}) => {
         setSelectedPost({
           title,
           description,
-          username
+          username,
+          ingredients,
+          steps
         })
       },
       current:selectedPost

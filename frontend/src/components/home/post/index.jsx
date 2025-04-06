@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { AppContext } from "../../../app/contexts";
 
 
-const Post = ({description,username, width, imageHeight, type, isFromFollowedUser, title}) => {
+const Post = ({description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
@@ -21,7 +21,7 @@ const Post = ({description,username, width, imageHeight, type, isFromFollowedUse
         if(type === "home"){
             return (
                 <Link onClick={() => {
-                    appInfo.post.changeCurrent({title,description,username});
+                    appInfo.post.changeCurrent({title,description,username,steps,ingredients});
                 }} href={{pathname:"/home/post", query:{id:"1234"}}} as={`/home/post?id=${1234}`}>
                     <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
                 </Link> 

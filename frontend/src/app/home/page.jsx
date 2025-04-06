@@ -49,7 +49,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
@@ -68,7 +68,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
