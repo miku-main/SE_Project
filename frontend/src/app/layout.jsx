@@ -64,7 +64,7 @@ const Layout = ({children}) => {
     <html>
       <body>
         <AppContext.Provider value={appSettings}>
-          <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={"xl"}>
+          <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={false}>
             <Box sx={layoutStyle}>
               <Box sx={innerLayoutStyle}>
                 <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
