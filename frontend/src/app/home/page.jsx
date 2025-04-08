@@ -3,12 +3,19 @@
 import { Box, Grid2, Switch, Typography, Button } from "@mui/material";
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dropdown from "../../components/global/dropdown";
 import {listOfCountries, listOfIngredients, postData} from "../../constants";
 const Home = () => {
 
-    const [followingActive, setFollowingActive] = useState(false)
+    const filter = useRef({
+        result:postData,
+        selectedCountryList:[],
+        selectedIngredientList:[],
+        searchedPosts:[]
+    });
+
+    const [followingActive, setFollowingActive] = useState(false);
 
     const [selectedCountryList, setSelectedCountryList] = useState([]);
     const [selectedIngredientList, setSelectedIngredientList] = useState([]);
@@ -16,26 +23,112 @@ const Home = () => {
     const [searchedPosts,setSearchedPosts] = useState(postData);
     const postTitles = useRef(postData.filter((post) => !post.followed).map((post) => {
         return post.title;
-    }))
+    }));
 
-    const handleChange = (type,data) => {
-        if(type === "country"){
-            setSelectedCountryList(data);
-        }
-        else if(type === "ingredient"){
-            setSelectedIngredientList(data);
-        }
+
+
+    useEffect(() => {
+        let result = [];
+        postData.map((post) => {
+            if(post.followed === followingActive){
+                result.push(post);
+            }
+        })
+        // filter.current = {...filter.current, result:postData.map((post) => {
+        //     if(post.followed === followingActive){
+        //         result.push(post);
+        //     }
+        // })}
+
+        filter.current = {...filter.current, result};
+        console.log(filter.current);
+    },[]);
+
+    // useEffect(() => {
+    //     let result = []
+        
+    //     const containsIngredients = (selectedIngredients, ingredients) => {
+    //         let matched = false;
+    //         ingredients.map((ingredient) => {
+    //             if(selectedIngredients.indexOf(ingredient) !== -1){
+    //                 matched = true;
+    //             }
+    //         })
+
+    //         return matched;
+    //     }
+    //     searchedPosts.map((post) => {
+    //         if(post.followed === followingActive){
+    //             if(selectedCountryList.indexOf(post.country) !== -1){
+    //                 result.push(post);
+    //             }
+    //             else if(containsIngredients(selectedIngredientList,post.ingredients)){
+    //                 result.push(post);
+    //             }
+    //         }
+    //     })
+
+
+    //     filter.current = {
+    //         selectedCountryList,
+    //         selectedIngredientList,
+    //         searchedPosts,
+    //         result
+    //     }
+    //     console.log(filter.current)
+    // },[selectedCountryList,selectedIngredientList,searchedPosts])
+
+    const handleCountryDropdownChange = (data) => {
+        setSelectedCountryList(data);
+        handleFilter();
     }
 
+    const handleIngredientDropdownChange = (data) => {
+        setSelectedIngredientList(data);
+        handleFilter();
+    }
+
+    const handleFilter = () => {
+        let result = []
+        const containsIngredients = (selectedIngredients, ingredients) => {
+            let matched = false;
+            ingredients.map((ingredient) => {
+                if(selectedIngredients.indexOf(ingredient) !== -1){
+                    matched = true;
+                }
+            })
+
+            return matched;
+        }
+        searchedPosts.map((post) => {
+            if(post.followed === followingActive){
+                if(selectedCountryList.indexOf(post.country) !== -1){
+                    result.push(post);
+                }
+                else if(containsIngredients(selectedIngredientList,post.ingredients)){
+                    result.push(post);
+                }
+            }
+        })
+
+
+        filter.current = {
+            selectedCountryList,
+            selectedIngredientList,
+            searchedPosts,
+            result
+        }
+    }
     const handleSearchChange = (searchedData) => {
-    
         const result = [];
+
         postData.map((post) => {
             if(searchedData.indexOf(post.title) !== -1){
                 result.push(post);
             }
         })
-        setSearchedPosts(result)
+        setSearchedPosts(result);
+        handleFilter();
     }
 
     const currentScreen = (screenName) => {
@@ -43,8 +136,7 @@ const Home = () => {
                 return (
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                    
-                        {searchedPosts.map((post,index) => {
+                        {filter.current.result.map((post,index) => {
                             if(!post.followed){
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
@@ -63,7 +155,7 @@ const Home = () => {
             return(
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {searchedPosts.map((post,index) => {
+                        {filter.current.result.map((post,index) => {
                             if(post.followed){
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
@@ -88,10 +180,10 @@ const Home = () => {
                     </Box>
                     <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
                         <Box sx={{marginRight:"10%"}}>
-                            <Dropdown handleChange={(event) => handleChange("country",event.target.value)} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
+                            <Dropdown handleChange={handleCountryDropdownChange} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
                         </Box>
                         <Box>
-                            <Dropdown handleChange={(event) => handleChange("ingredient", event.target.value)} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
+                            <Dropdown handleChange={handleIngredientDropdownChange} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
                         </Box>
                     </Box>
                 </Box>
