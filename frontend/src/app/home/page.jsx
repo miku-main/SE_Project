@@ -25,6 +25,7 @@ const Home = () => {
         return post.title;
     }));
 
+    const recentSearchedData = useRef(postTitles.current);
     const containsIngredients = (selectedIngredients, ingredients) => {
         let matched = false;
         ingredients.map((ingredient) => {
@@ -59,9 +60,8 @@ const Home = () => {
     useEffect(() => {
         // console.log(selectedCountryList.)
         if(selectedCountryList.length !== 0 || selectedIngredientList.length !== 0){
-            let result = []
-        
-            // result = handleSearchChange();
+            let result = [];
+            
             postData.map((post) => {
                 if(post.followed === followingActive){
                     if(selectedCountryList.indexOf(post.country) !== -1){
@@ -73,6 +73,7 @@ const Home = () => {
                 }
             })
            
+            result = handleSearchChange(recentSearchedData.current, false);
     
     
             setFilter({
@@ -112,6 +113,8 @@ const Home = () => {
                     }
                 })
             }
+
+            result = handleSearchChange(recentSearchedData.current, false);
 
             setFilter({
                 selectedCountryList,
@@ -230,6 +233,9 @@ const Home = () => {
                 setFilter({...filter, result:{...filter.result, notFollowed:result}})
             }
         }
+
+        recentSearchedData.current = searchedData;
+        return result;
     }
 
     const currentScreen = (screenName) => {
