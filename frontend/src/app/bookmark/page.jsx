@@ -1,6 +1,6 @@
+"use client"
 import { useState } from "react";
 import { Box, Grid, Typography, BottomNavigation, BottomNavigationAction, Card, CardMedia, CardContent } from "@mui/material";
-import Home from "../../components/home/home";
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
 import Dropdown from "../../components/global/dropdown";
