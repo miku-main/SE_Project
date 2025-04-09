@@ -1,121 +1,89 @@
-"use client"
+"use client";
 
-import { Box, Grid2, Switch, Typography, Button } from "@mui/material";
-import Search from "../../components/home/search";
-import Post from "../../components/home/post";
-import { useRef, useState } from "react";
-import Dropdown from "../../components/global/dropdown";
-import {listOfCountries, listOfIngredients, postData} from "../../constants";
-const Home = () => {
+import { useState } from "react";
+import { Box, Grid, Typography, BottomNavigation, BottomNavigationAction, Card, CardMedia, CardContent, IconButton } from "@mui/material";
+import HomeIcon from '@mui/icons-material/Home';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GroupIcon from '@mui/icons-material/Group';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-    const [followingActive, setFollowingActive] = useState(false)
 
-    const [selectedCountryList, setSelectedCountryList] = useState([]);
-    const [selectedIngredientList, setSelectedIngredientList] = useState([]);
+const initialSavedData = [
+    { name: "Spaghetti Carbonara", image: "carbonara.jpg" },
+    { name: "Avocado Toast", image: "avocado.jpg" },
+    { name: "Chicken Curry", image: "curry.jpg" },
+    { name: "Fresh Basil", image: "basil.jpg" }
+];
 
-    const [searchedPosts,setSearchedPosts] = useState(postData);
-    const postTitles = useRef(postData.filter((post) => !post.followed).map((post) => {
-        return post.title;
-    }))
+const Bookmark = () => {
+    const [savedData, setSavedData] = useState(initialSavedData);
+    const [navValue, setNavValue] = useState(2); // 2 = Bookmarks
 
-    const handleChange = (type,data) => {
-        if(type === "country"){
-            setSelectedCountryList(data);
-        }
-        else if(type === "ingredient"){
-            setSelectedIngredientList(data);
-        }
-    }
+    const handleRemoveBookmark = (indexToRemove) => {
+        setSavedData(prev => prev.filter((_, index) => index !== indexToRemove));
+    };
 
-    const handleSearchChange = (searchedData) => {
-    
-        const result = [];
-        postData.map((post) => {
-            if(searchedData.indexOf(post.title) !== -1){
-                result.push(post);
-            }
-        })
-        setSearchedPosts(result)
-    }
-
-    const currentScreen = (screenName) => {
-        if(screenName === "Global"){
-                return (
-                <Box sx={{flexGrow:1}}>
-                    <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                    
-                        {searchedPosts.map((post,index) => {
-                            if(!post.followed){
-                                return (
-                                    <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
-                                        <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
-                                        </Box>
-                                    </Grid2>
-                                )
-                            }
-                        })}
-                    </Grid2>
-                </Box>
-            )
-        }
-        else if(screenName == "Following"){
-            return(
-                <Box sx={{flexGrow:1}}>
-                    <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {searchedPosts.map((post,index) => {
-                            if(post.followed){
-                                return (
-                                    <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
-                                        <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
-                                        </Box>
-                                    </Grid2>
-                                )
-                            }
-                        })}
-                    </Grid2>
-                </Box>
-            )
-        }
-    }
     return (
-        <Box sx={{height:"inherit"}}>
-            <Box sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                <Box sx={{width:"fit-content", marginBottom:"1%",marginTop:"2%"}}>
-                    <Box sx={{marginBottom:"2%"}}>
-                        <Search handleChange={handleSearchChange} data={postTitles.current}/>
-                    </Box>
-                    <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
-                        <Box sx={{marginRight:"10%"}}>
-                            <Dropdown handleChange={(event) => handleChange("country",event.target.value)} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
-                        </Box>
-                        <Box>
-                            <Dropdown handleChange={(event) => handleChange("ingredient", event.target.value)} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{width:"100%", marginBottom:"1rem"}}>
-                    <Box sx={{display:"flex", float:"right", marginRight:"2%"}}>
-                        <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => post.followed).map((post) => {
-                                return post.title;
-                            })
-                            setFollowingActive(true);
-                        }} sx={{color:"white", backgroundColor: followingActive ? "#FAADAD" : "rgba(250,173,173,0.5)", borderTopRightRadius:"0", borderBottomRightRadius:"0"}}>Following</Button>
-                        <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => !post.followed).map((post) => {
-                                return post.title;
-                            })
-                            setFollowingActive(false);
-                        }} sx={{color:"white", backgroundColor: followingActive ? "rgba(250,173,173,0.5)" :"#FAADAD" ,borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}}>Global</Button>
-                    </Box>
-                </Box>
-
-                {followingActive ? currentScreen("Following") : currentScreen("Global")}
+        <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#fff5f5' }}>
+            {/* Header */}
+            <Box sx={{ backgroundColor: '#FAADAD', padding: '1rem', textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>Bookmarks</Typography>
             </Box>
-        </Box>
-    )
-}
 
-export default Home;
+            {/* Saved Recipes Grid */}
+            <Box sx={{ flexGrow: 1, padding: '1rem', overflowY: 'auto' }}>
+                <Grid container spacing={2}>
+                    {savedData.map((item, index) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                            <Card sx={{ position: 'relative' }}>
+                                <CardMedia
+                                    component="img"
+                                    height="160"
+                                    image={`/images/${item.image}`} // You must ensure this path is valid
+                                    alt={item.name}
+                                />
+                                <CardContent>
+                                    <Typography variant="body1" align="center" fontWeight="bold">
+                                        {item.name}
+                                    </Typography>
+                                </CardContent>
+                                {/* Delete/Remove bookmark icon */}
+                                <IconButton
+                                    sx={{ position: 'absolute', top: 5, right: 5, color: 'white', backgroundColor: '#fa5c5c', '&:hover': { backgroundColor: '#ff0000' } }}
+                                    onClick={() => handleRemoveBookmark(index)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Card>
+                        </Grid>
+                    ))}
+                    {savedData.length === 0 && (
+                        <Grid item xs={12}>
+                            <Typography align="center" sx={{ color: '#888', marginTop: '2rem' }}>
+                                No bookmarks yet.
+                            </Typography>
+                        </Grid>
+                    )}
+                </Grid>
+            </Box>
+
+            {/* Bottom Navigation */}
+            <BottomNavigation
+                value={navValue}
+                onChange={(event, newValue) => setNavValue(newValue)}
+                showLabels
+                sx={{ boxShadow: '0 -2px 5px rgba(0,0,0,0.1)', borderTop: '1px solid #ddd' }}
+            >
+                <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+                <BottomNavigationAction label="Post" icon={<AddBoxIcon />} />
+                <BottomNavigationAction label="Bookmarks" icon={<BookmarkIcon />} />
+                <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
+                <BottomNavigationAction label="Groups" icon={<GroupIcon />} />
+            </BottomNavigation>
+        </Box>
+    );
+};
+
+export default Bookmark;
