@@ -58,7 +58,6 @@ const Home = () => {
     },[]);
 
     useEffect(() => {
-        // console.log(selectedCountryList.)
         if(selectedCountryList.length !== 0 || selectedIngredientList.length !== 0){
             let result = [];
             
@@ -74,7 +73,6 @@ const Home = () => {
             })
            
             result = handleSearchChange(recentSearchedData.current, false);
-    
     
             setFilter({
                 selectedCountryList,
@@ -114,7 +112,7 @@ const Home = () => {
                 })
             }
 
-            result = handleSearchChange(recentSearchedData.current, false);
+            // result = handleSearchChange(recentSearchedData.current, false);
 
             setFilter({
                 selectedCountryList,
@@ -137,37 +135,7 @@ const Home = () => {
         setSelectedIngredientList(data);
     }
 
-    // const handleFilter = () => {
-    //     let result = []
-    //     const containsIngredients = (selectedIngredients, ingredients) => {
-    //         let matched = false;
-    //         ingredients.map((ingredient) => {
-    //             if(selectedIngredients.indexOf(ingredient) !== -1){
-    //                 matched = true;
-    //             }
-    //         })
-
-    //         return matched;
-    //     }
-    //     searchedPosts.map((post) => {
-    //         if(post.followed === followingActive){
-    //             if(selectedCountryList.indexOf(post.country) !== -1){
-    //                 result.push(post);
-    //             }
-    //             else if(containsIngredients(selectedIngredientList,post.ingredients)){
-    //                 result.push(post);
-    //             }
-    //         }
-    //     })
-
-
-    //     filter.current = {
-    //         selectedCountryList,
-    //         selectedIngredientList,
-    //         searchedPosts,
-    //         result
-    //     }
-    // }
+  
     const handleSearchChange = (searchedData, isOnlySearch) => {
         let result = [];
 
@@ -175,29 +143,26 @@ const Home = () => {
             postData.map((post) => {
                 if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
                     if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
-                        postData.map((post) => {
-                            if(post.followed === followingActive){
-                                result.push(post);
-                            }
-                        })
+                
+                        if(post.followed === followingActive){
+                            result.push(post);
+                        }
+                        
                     }
                     else if(selectedCountryList.length === 0){
-                        postData.map((post) => {
-                            if(post.followed === followingActive){
-                                 if(containsIngredients(selectedIngredientList,post.ingredients)){
-                                    result.push(post);
-                                }
+                        if(post.followed === followingActive){
+                                if(containsIngredients(selectedIngredientList,post.ingredients)){
+                                result.push(post);
                             }
-                        })
+                        }
+                    
                     }
                     else if(selectedIngredientList.length === 0){
-                        postData.map((post) => {
-                            if(post.followed === followingActive){
-                                 if(selectedCountryList.indexOf(post.country) !== -1){
-                                    result.push(post);
-                                }
+                        if(post.followed === followingActive){
+                                if(selectedCountryList.indexOf(post.country) !== -1){
+                                result.push(post);
                             }
-                        })
+                        }
                     }
                 }
             })
@@ -248,7 +213,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
@@ -267,7 +232,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
