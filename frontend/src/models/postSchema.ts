@@ -1,6 +1,6 @@
 import mongoose, { Model, Schema } from "mongoose";
 
-interface IItem extends Document {
+interface IPost extends Document {
     username:string;
     likes:number;
     description:string;
@@ -10,7 +10,7 @@ interface IItem extends Document {
     steps:Array<string>;
 }
 
-const postSchema = new Schema<IItem>({
+const postSchema = new Schema<IPost>({
     username:{
         type:String,
         required:true
@@ -38,5 +38,7 @@ const postSchema = new Schema<IItem>({
         type:[String],
         required:false
     }
+});
 
-})
+const Post:Model<IPost> = mongoose.models.Post || mongoose.model<IPost>("Post", postSchema);
+export default Post;
