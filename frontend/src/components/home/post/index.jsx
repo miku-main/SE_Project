@@ -7,9 +7,10 @@ import Bookmark from "./assets/bookmark";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { AppContext } from "../../../app/contexts";
+import { postData } from "../../../constants";
 
 
-const Post = ({description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title}) => {
+const Post = ({description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title, likes}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
@@ -62,12 +63,18 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                     </Card>
                 </Box>
                 <Box sx={{marginLeft:"1rem", marginTop:"4.5rem"}}>
-                    <Box sx={{marginBottom:"0.5rem"}}>
-                        <ButtonBase onClick={() => {
+                    <Box sx={{marginBottom:"0.5rem", display:"flex"}}>
+                        <ButtonBase sx={{marginRight:"0.5rem"}} onClick={() => {
                             setHeartActiveState(!heartActiveState)
                         }}>
                             <Heart isActive={heartActiveState}/>
                         </ButtonBase>
+
+                        <Box>
+                            <Typography color="white" fontWeight={"bolder"}>
+                                {likes}
+                            </Typography>
+                        </Box>
                     </Box>
                     <Box>
                         <ButtonBase sx={{width:"fit-content"}} onClick={() => {
