@@ -8,45 +8,134 @@ import Dropdown from "../../components/global/dropdown";
 import {listOfCountries, listOfIngredients, postData} from "../../constants";
 const Home = () => {
 
-    const filter = useRef({
-        result:postData,
+    const [filter,setFilter] = useState({
+        result:{
+            followed:[],
+            notFollowed:[],
+        },
         selectedCountryList:[],
         selectedIngredientList:[],
-        searchedPosts:[]
     });
 
     const [followingActive, setFollowingActive] = useState(false);
 
     const [selectedCountryList, setSelectedCountryList] = useState([]);
     const [selectedIngredientList, setSelectedIngredientList] = useState([]);
-
-    const [searchedPosts,setSearchedPosts] = useState(postData);
-    const postTitles = useRef(postData.filter((post) => !post.followed).map((post) => {
+    const postTitles = useRef(postData.filter((post) => post.followed === followingActive).map((post) => {
         return post.title;
     }));
 
-
-
-    useEffect(() => {
-        let result = [];
-        postData.map((post) => {
-            if(post.followed === followingActive){
-                result.push(post);
+    const containsIngredients = (selectedIngredients, ingredients) => {
+        let matched = false;
+        ingredients.map((ingredient) => {
+            if(selectedIngredients.indexOf(ingredient) !== -1){
+                matched = true;
             }
         })
-        // filter.current = {...filter.current, result:postData.map((post) => {
-        //     if(post.followed === followingActive){
-        //         result.push(post);
-        //     }
-        // })}
 
-        filter.current = {...filter.current, result};
-        console.log(filter.current);
+        return matched;
+    }
+
+    useEffect(() => {
+        let result = {
+            followed:[],
+            notFollowed:[]
+        };
+
+      
+        postData.map((post) => {
+            if(post.followed){
+                result.followed.push(post)
+            }
+            else{
+                result.notFollowed.push(post);
+            }
+        })
+      
+        setFilter({...filter, result});
+        console.log(filter.result)
     },[]);
 
-    // useEffect(() => {
-    //     let result = []
+    useEffect(() => {
+        // console.log(selectedCountryList.)
+        if(selectedCountryList.length !== 0 || selectedIngredientList.length !== 0){
+            let result = []
         
+            // result = handleSearchChange();
+            postData.map((post) => {
+                if(post.followed === followingActive){
+                    if(selectedCountryList.indexOf(post.country) !== -1){
+                        result.push(post);
+                    }
+                    else if(containsIngredients(selectedIngredientList,post.ingredients)){
+                        result.push(post);
+                    }
+                }
+            })
+           
+    
+    
+            setFilter({
+                selectedCountryList,
+                selectedIngredientList,
+                result : {
+                    followed: followingActive ? result : filter.result.followed,
+                    notFollowed: !followingActive ? result : filter.result.notFollowed
+                }
+            })
+        }
+        else{
+            let result = []
+
+            if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
+                postData.map((post) => {
+                    if(post.followed === followingActive){
+                        result.push(post);
+                    }
+                })
+            }
+            else if(selectedCountryList.length === 0){
+                postData.map((post) => {
+                    if(post.followed === followingActive){
+                         if(containsIngredients(selectedIngredientList,post.ingredients)){
+                            result.push(post);
+                        }
+                    }
+                })
+            }
+            else if(selectedIngredientList.length === 0){
+                postData.map((post) => {
+                    if(post.followed === followingActive){
+                         if(selectedCountryList.indexOf(post.country) !== -1){
+                            result.push(post);
+                        }
+                    }
+                })
+            }
+
+            setFilter({
+                selectedCountryList,
+                selectedIngredientList,
+                result : {
+                    followed: followingActive ? result : filter.result.followed,
+                    notFollowed: !followingActive ? result : filter.result.notFollowed
+                }
+            })
+        }
+
+    },[selectedCountryList,selectedIngredientList,followingActive])
+
+    const handleCountryDropdownChange = (data) => {
+        setSelectedCountryList(data);
+ 
+    }
+
+    const handleIngredientDropdownChange = (data) => {
+        setSelectedIngredientList(data);
+    }
+
+    // const handleFilter = () => {
+    //     let result = []
     //     const containsIngredients = (selectedIngredients, ingredients) => {
     //         let matched = false;
     //         ingredients.map((ingredient) => {
@@ -75,60 +164,72 @@ const Home = () => {
     //         searchedPosts,
     //         result
     //     }
-    //     console.log(filter.current)
-    // },[selectedCountryList,selectedIngredientList,searchedPosts])
+    // }
+    const handleSearchChange = (searchedData, isOnlySearch) => {
+        let result = [];
 
-    const handleCountryDropdownChange = (data) => {
-        setSelectedCountryList(data);
-        handleFilter();
-    }
-
-    const handleIngredientDropdownChange = (data) => {
-        setSelectedIngredientList(data);
-        handleFilter();
-    }
-
-    const handleFilter = () => {
-        let result = []
-        const containsIngredients = (selectedIngredients, ingredients) => {
-            let matched = false;
-            ingredients.map((ingredient) => {
-                if(selectedIngredients.indexOf(ingredient) !== -1){
-                    matched = true;
+        if(followingActive){
+            postData.map((post) => {
+                if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
+                    if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
+                        postData.map((post) => {
+                            if(post.followed === followingActive){
+                                result.push(post);
+                            }
+                        })
+                    }
+                    else if(selectedCountryList.length === 0){
+                        postData.map((post) => {
+                            if(post.followed === followingActive){
+                                 if(containsIngredients(selectedIngredientList,post.ingredients)){
+                                    result.push(post);
+                                }
+                            }
+                        })
+                    }
+                    else if(selectedIngredientList.length === 0){
+                        postData.map((post) => {
+                            if(post.followed === followingActive){
+                                 if(selectedCountryList.indexOf(post.country) !== -1){
+                                    result.push(post);
+                                }
+                            }
+                        })
+                    }
                 }
             })
-
-            return matched;
         }
-        searchedPosts.map((post) => {
-            if(post.followed === followingActive){
-                if(selectedCountryList.indexOf(post.country) !== -1){
-                    result.push(post);
+        else{
+            postData.map((post) => {
+                if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
+                    if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
+                        console.log("Option 1")
+                        result.push(post);
+                    }
+                    else if(selectedCountryList.length === 0){
+                        if(containsIngredients(selectedIngredientList,post.ingredients)){
+                            result.push(post);
+                        }
+                    }
+                    else if(selectedIngredientList.length === 0){
+                        if(selectedCountryList.indexOf(post.country) !== -1){
+                            result.push(post);
+                        } 
+                    }
+                    
                 }
-                else if(containsIngredients(selectedIngredientList,post.ingredients)){
-                    result.push(post);
-                }
-            }
-        })
-
-
-        filter.current = {
-            selectedCountryList,
-            selectedIngredientList,
-            searchedPosts,
-            result
+            })
         }
-    }
-    const handleSearchChange = (searchedData) => {
-        const result = [];
+        console.log(result);
 
-        postData.map((post) => {
-            if(searchedData.indexOf(post.title) !== -1){
-                result.push(post);
+        if(isOnlySearch){
+            if(followingActive){
+                setFilter({...filter, result:{...filter.result, followed:result}})
             }
-        })
-        setSearchedPosts(result);
-        handleFilter();
+            else{
+                setFilter({...filter, result:{...filter.result, notFollowed:result}})
+            }
+        }
     }
 
     const currentScreen = (screenName) => {
@@ -136,7 +237,7 @@ const Home = () => {
                 return (
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {filter.current.result.map((post,index) => {
+                        {filter.result.notFollowed.map((post,index) => {
                             if(!post.followed){
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
@@ -155,7 +256,7 @@ const Home = () => {
             return(
                 <Box sx={{flexGrow:1}}>
                     <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
-                        {filter.current.result.map((post,index) => {
+                        {filter.result.followed.map((post,index) => {
                             if(post.followed){
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
