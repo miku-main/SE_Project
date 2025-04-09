@@ -9,7 +9,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GroupIcon from '@mui/icons-material/Group';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-// You can replace this with actual saved data from your backend or state
 const initialSavedData = [
     { name: "Spaghetti Carbonara", image: "carbonara.jpg" },
     { name: "Avocado Toast", image: "avocado.jpg" },
