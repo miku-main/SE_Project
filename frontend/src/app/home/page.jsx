@@ -252,10 +252,10 @@ const Home = () => {
                     </Box>
                     <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
                         <Box sx={{marginRight:"10%"}}>
-                            <Dropdown handleChange={(event) => handleChange("country",event.target.value)} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
+                            <Dropdown handleChange={handleCountryDropdownChange} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
                         </Box>
                         <Box>
-                            <Dropdown handleChange={(event) => handleChange("ingredient", event.target.value)} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
+                            <Dropdown handleChange={handleIngredientDropdownChange} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
                         </Box>
                     </Box>
                 </Box>
@@ -276,58 +276,10 @@ const Home = () => {
                     </Box>
                 </Box>
 
-            {/* Saved Recipes Grid */}
-            <Box sx={{ flexGrow: 1, padding: '1rem', overflowY: 'auto' }}>
-                <Grid container spacing={2}>
-                    {savedData.map((item, index) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                            <Card sx={{ position: 'relative' }}>
-                                <CardMedia
-                                    component="img"
-                                    height="160"
-                                    image={`/images/${item.image}`} // You must ensure this path is valid
-                                    alt={item.name}
-                                />
-                                <CardContent>
-                                    <Typography variant="body1" align="center" fontWeight="bold">
-                                        {item.name}
-                                    </Typography>
-                                </CardContent>
-                                {/* Delete/Remove bookmark icon */}
-                                <IconButton
-                                    sx={{ position: 'absolute', top: 5, right: 5, color: 'white', backgroundColor: '#fa5c5c', '&:hover': { backgroundColor: '#ff0000' } }}
-                                    onClick={() => handleRemoveBookmark(index)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Card>
-                        </Grid>
-                    ))}
-                    {savedData.length === 0 && (
-                        <Grid item xs={12}>
-                            <Typography align="center" sx={{ color: '#888', marginTop: '2rem' }}>
-                                No bookmarks yet.
-                            </Typography>
-                        </Grid>
-                    )}
-                </Grid>
+                {followingActive ? currentScreen("Following") : currentScreen("Global")}
             </Box>
-
-            {/* Bottom Navigation */}
-            <BottomNavigation
-                value={navValue}
-                onChange={(event, newValue) => setNavValue(newValue)}
-                showLabels
-                sx={{ boxShadow: '0 -2px 5px rgba(0,0,0,0.1)', borderTop: '1px solid #ddd' }}
-            >
-                <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-                <BottomNavigationAction label="Post" icon={<AddBoxIcon />} />
-                <BottomNavigationAction label="Bookmarks" icon={<BookmarkIcon />} />
-                <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
-                <BottomNavigationAction label="Groups" icon={<GroupIcon />} />
-            </BottomNavigation>
         </Box>
-    );
-};
+    )
+}
 
-export default Bookmark;
+export default Home;
