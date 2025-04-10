@@ -5,7 +5,6 @@ interface IPost extends Document {
     likes:number;
     description:string;
     title:string;
-    followed:boolean;
     ingredients:Array<string>;
     steps:Array<string>;
 }
@@ -24,10 +23,6 @@ const postSchema = new Schema<IPost>({
     },
     title:{
         type:String,
-        required:true
-    },
-    followed:{
-        type:Boolean,
         required:true
     },
     ingredients: {
