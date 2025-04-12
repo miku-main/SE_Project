@@ -7,6 +7,7 @@ interface IPost extends Document {
     title:string;
     ingredients:Array<string>;
     steps:Array<string>;
+    country:string;
 }
 
 const postSchema = new Schema<IPost>({
@@ -27,11 +28,15 @@ const postSchema = new Schema<IPost>({
     },
     ingredients: {
         type:[String],
-        required:false
+        required:true
     },
     steps:{
         type:[String],
-        required:false
+        required:true
+    },
+    country:{
+        type:String,
+        required:true
     }
 });
 
