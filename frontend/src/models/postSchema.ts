@@ -1,16 +1,16 @@
 import mongoose, { Model, Schema } from "mongoose";
 
-interface IItem extends Document {
+interface IPost extends Document {
     username:string;
     likes:number;
     description:string;
     title:string;
-    followed:boolean;
     ingredients:Array<string>;
     steps:Array<string>;
+    country:string;
 }
 
-const postSchema = new Schema<IItem>({
+const postSchema = new Schema<IPost>({
     username:{
         type:String,
         required:true
@@ -26,17 +26,19 @@ const postSchema = new Schema<IItem>({
         type:String,
         required:true
     },
-    followed:{
-        type:Boolean,
-        required:true
-    },
     ingredients: {
         type:[String],
-        required:false
+        required:true
     },
     steps:{
         type:[String],
-        required:false
+        required:true
+    },
+    country:{
+        type:String,
+        required:true
     }
+});
 
-})
+const Post:Model<IPost> = mongoose.models.Post || mongoose.model<IPost>("Post", postSchema);
+export default Post;
