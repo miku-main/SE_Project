@@ -60,48 +60,95 @@ const Post = () => {
     }
 
     return(
-        <Box className="post-page">
-            //
-            Post
+        <Box className="post-page" style={{padding: "2rem"}}>
+            <h1>Post</h1>
+
+            <label> Choose Images :</label>
+            <input 
+                type="file" 
+                accept="image/*" 
+                multiple onChange={handleImageChange} 
+                style={{marginBottom: "1rem"}} 
+            />
+            
+            <div style={{display: "flex",  gap: "2rem", marginBottom: "2rem"}}>
+                    {imageIndex !== null && (
+                        <div style={{flex: 2}}>
+                            
+                            <img 
+                                src={images[imageIndex]} 
+                                alt="Selected Preview" 
+                                style={{
+                                    width: "100%", 
+                                    maxHeight: 400, 
+                                    objectFit: "contain", 
+                                    borderRadius: "8px", 
+                                    boxShadow: "0 2px 10px rgba(0,0,0,0.1"
+                                }} 
+                            />
+                        </div>
+                    )}
+                    <form onSubmit={handleSubmit} style={{flex: 1}}>
+                    <textarea 
+                        value={description} 
+                        onChange={handleDescriptionChange} 
+                        placeholder="Enter food description..." 
+                        rows="8" 
+                        style={{
+                            width:'100%',
+                            padding: "10px",
+                            marginBottom: "1rem",
+                            resize: "none",
+                            borderRadius: "4px",
+                            border: "1px solid #ccc",
+                        }}
+                    ></textarea>
+                    <button 
+                        type="submit"
+                        style={{
+                            width: "100%",
+                            padding: "10px",
+                            backgroundColor: "#007BFF",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Post
+                    </button>
+                </form>
+            </div>
+
             {images.length > 0 && (
                 <div>
-                    {images.map((image, index) => (
-                        <img key={index} src={image} alt={`Preview ${index}`} style={{width: "100px", height: "100px", objectFit: "cover", boarder: imageIndex === index ? "3px solid blue" : "1px solid grey", cursor: "pointer"}} onClick={() => setimageIndex(index)}/>
-                    ))}
+                    <h3>Image Select:</h3>
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            flexWrap: "wrap",
+                            marginTop: "10px",
+                        }}    
+                    >
+                        {images.map((image, index) => (
+                            <img 
+                                key={index} 
+                                src={image} 
+                                alt={`Preview ${index}`} 
+                                onClick={() => setimageIndex(index)}
+                                style={{
+                                    width: "100px", 
+                                    height: "100px", 
+                                    objectFit: "cover", 
+                                    boarder: imageIndex === index 
+                                        ? "3px solid blue" : "1px solid grey", 
+                                    cursor: "pointer"}} 
+                            />
+                        ))}
+                    </div>
                 </div>
             )}
-
-            {imageIndex !== null && (
-                <div style={{marginTop: "20px"}}>
-                    <h3>Selected Images Preview:</h3>
-                    <img src={images[imageIndex]} alt="Selected Preview" style={{width: "100%", maxHeight: 400, objectFit: "contain"}} />
-                </div>
-            )}
-
-
-
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label> Choose Image:</label>
-                    <input type="file" accept="image/*" multiple onChange={handleImageChange} />           
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <textarea value={description} onChange={handleDescriptionChange} placeholder="Enter food description..." rows="8" style={{width:'50%'}}></textarea>
-                </div>
-                <button type="submit">Post</button>
-            </form>
-
-           
-{/*}
-            {previewImage && (
-                <div className="preview">
-                <h3>Preview:</h3>
-                <img src={previewImage} alt="Preview" style={{maxWidth: "300px"}} />
-                <p>{description}</p>
-                </div>
-                )} 
-*/}
         </Box>
     )
 }
