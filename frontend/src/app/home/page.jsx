@@ -143,23 +143,20 @@ const Home = () => {
             postData.map((post) => {
                 if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
                     if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
-                
                         if(post.followed === followingActive){
                             result.push(post);
                         }
-                        
                     }
                     else if(selectedCountryList.length === 0){
                         if(post.followed === followingActive){
-                                if(containsIngredients(selectedIngredientList,post.ingredients)){
-                                result.push(post);
+                            if(containsIngredients(selectedIngredientList,post.ingredients)){
+                            result.push(post);
                             }
                         }
-                    
                     }
                     else if(selectedIngredientList.length === 0){
                         if(post.followed === followingActive){
-                                if(selectedCountryList.indexOf(post.country) !== -1){
+                            if(selectedCountryList.indexOf(post.country) !== -1){
                                 result.push(post);
                             }
                         }
