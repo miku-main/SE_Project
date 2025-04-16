@@ -5,6 +5,7 @@ import '../../src/index.css';
 import {Box, Container} from "@mui/material"
 import Navigator from '../components/global/navigator';
 import { AppContext } from './contexts';
+import { connectMongoDB } from '../../config/mongodb';
 
 
 
@@ -60,6 +61,7 @@ const Layout = ({children}) => {
   //   }
   // });
 
+  connectMongoDB();
   return (
     <html>
       <body>
