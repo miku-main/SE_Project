@@ -1,7 +1,7 @@
 "use client"
 
 import { Avatar, CardContent, CardHeader, CardMedia, Typography, Box, Card, Button, ButtonBase } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Heart from "./assets/heart";
 import Bookmark from "./assets/bookmark";
 import Link from 'next/link';
@@ -10,7 +10,7 @@ import { AppContext } from "../../../app/contexts";
 import { postData } from "../../../constants";
 
 
-const Post = ({description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title, likes}) => {
+const Post = ({id,description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title, likes}) => {
 
     const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
     const [heartActiveState, setHeartActiveState] = useState(false);
@@ -18,11 +18,22 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
     const appInfo = useContext(AppContext);
 
 
+    useEffect(() => {
+        let newPosts = [];
+        if(heartActiveState){
+            newPosts = appInfo.post.addLike(id);
+        }
+        else{
+            newPosts = appInfo.post.removeLike(id);
+        }
+        appInfo.post.updatePosts(newPosts);
+    },[heartActiveState])
+
     const postType = () => {
         if(type === "home"){
             return (
                 <Link onClick={() => {
-                    appInfo.post.changeCurrent({title,description,username,steps,ingredients});
+                    appInfo.post.changeCurrent({id,title,description,username,steps,ingredients, likes,liked});
                 }} href={{pathname:"/home/post", query:{id:"1234"}}} as={`/home/post?id=${1234}`}>
                     <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
                 </Link> 
@@ -75,13 +86,6 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                                 {likes}
                             </Typography>
                         </Box>
-                    </Box>
-                    <Box>
-                        <ButtonBase sx={{width:"fit-content"}} onClick={() => {
-                            setBookmarkActiveState(!bookmarkActiveState)
-                        }}>
-                            <Bookmark isActive={bookmarkActiveState}/>
-                        </ButtonBase>
                     </Box>
                 </Box>
             </Box>

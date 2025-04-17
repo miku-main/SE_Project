@@ -1,9 +1,22 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import Bookmark from "../assets/bookmark";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../../../app/contexts";
 
 const Ingredient = ({name}) => {
     const [bookmarkActiveState,setBookmarkActiveState] = useState(false);
+    const appInfo = useContext(AppContext);
+
+    useEffect(() => {
+        if(bookmarkActiveState){
+            appInfo.user.bookmark.updateBookmarks(name);
+        }
+        else{
+            appInfo.user.bookmark.deleteBookmark(name);
+        }
+    }, [bookmarkActiveState]);
+
+
     return (
         <Box>
             <Box sx={{display:"flex"}}>

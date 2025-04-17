@@ -3,11 +3,13 @@
 import { Box, Grid2, Switch, Typography, Button } from "@mui/material";
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Dropdown from "../../components/global/dropdown";
 import {listOfCountries, listOfIngredients, postData} from "../../constants";
+import { AppContext } from "../contexts";
 const Home = () => {
 
+    const appInfo = useContext(AppContext);
     const [filter,setFilter] = useState({
         result:{
             followed:[],
@@ -44,7 +46,7 @@ const Home = () => {
         };
 
       
-        postData.map((post) => {
+        appInfo.post.posts.map((post) => {
             if(post.followed){
                 result.followed.push(post)
             }
@@ -61,7 +63,7 @@ const Home = () => {
         if(selectedCountryList.length !== 0 || selectedIngredientList.length !== 0){
             let result = [];
             
-            postData.map((post) => {
+            appInfo.post.posts.map((post) => {
                 if(post.followed === followingActive){
                     if(selectedCountryList.indexOf(post.country) !== -1){
                         result.push(post);
@@ -87,14 +89,14 @@ const Home = () => {
             let result = []
 
             if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
-                postData.map((post) => {
+                appInfo.post.posts.map((post) => {
                     if(post.followed === followingActive){
                         result.push(post);
                     }
                 })
             }
             else if(selectedCountryList.length === 0){
-                postData.map((post) => {
+                appInfo.post.posts.map((post) => {
                     if(post.followed === followingActive){
                          if(containsIngredients(selectedIngredientList,post.ingredients)){
                             result.push(post);
@@ -103,7 +105,7 @@ const Home = () => {
                 })
             }
             else if(selectedIngredientList.length === 0){
-                postData.map((post) => {
+                appInfo.post.posts.map((post) => {
                     if(post.followed === followingActive){
                          if(selectedCountryList.indexOf(post.country) !== -1){
                             result.push(post);
@@ -140,7 +142,7 @@ const Home = () => {
         let result = [];
 
         if(followingActive){
-            postData.map((post) => {
+            appInfo.post.posts.map((post) => {
                 if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
                     if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
                         if(post.followed === followingActive){
@@ -210,7 +212,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
@@ -229,7 +231,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )

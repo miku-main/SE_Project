@@ -50,6 +50,15 @@ export const listOfIngredients = [
     "Cream"
 ]
 
+export const userPostLikes = [
+  {
+    id:1,
+    postUsername:"randomUser1",
+    postId:1,
+    usernameLiked:""
+  }
+]
+
 export const postData = [
   { 
     id: 1, 
