@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../src/index.css';
 import {Box, Container} from "@mui/material"
 import Navigator from '../components/global/navigator';
@@ -28,8 +28,11 @@ const Layout = ({children}) => {
   }
 
   // Change later to use database
-  const [posts, setPosts] = useState(postData);
-
+  // Add liked parameter to each post when receieved by database
+  const likedPosts = useRef([]);
+  const posts = useRef(postData.map((post) => {
+    return {...post, liked:false}
+  }));
   const [selectedPost, setSelectedPost] = useState({
     id:0,
     title:"",
@@ -37,12 +40,39 @@ const Layout = ({children}) => {
     username:"",
     steps:[],
     ingredients:[],
-    likes:0
+    likes:0,
+    country:"",
+    liked:false,
+    followed:false
   });
   const [bookmarks, setBookmarks] = useState([]);
   const appSettings = {
     post:{
-      changeCurrent: ({id,title,description,username,ingredients,steps,likes,liked}) => {
+      changeCurrent: ({id,title,description,username,steps,ingredients,likes,country,liked,followed}) => {
+        const post = {
+          id: id,
+          username: username, 
+          likes: likes,
+          description:description,
+          title: title,
+          ingredients: ingredients,
+          steps: steps,
+          country: country,
+          liked:liked,
+          followed:followed
+      }
+
+      console.log(likedPosts.current);
+     
+      if(likedPosts.current.indexOf(post) !== -1){
+        console.log("Selected")
+        likedPosts.current.forEach((post) => {
+          if(id === post.id){
+            setSelectedPost(post);
+          }
+        })
+      }
+      else{
         setSelectedPost({
           id,
           title,
@@ -51,22 +81,27 @@ const Layout = ({children}) => {
           ingredients,
           steps,
           likes,
-          liked
+          country,
+          liked,
+          followed
         })
+      }
+
+
       },
       current:selectedPost,
       addLike:(selectedPostId) => {
         //Update likes in database
 
         //Use this for testing purposes
-        const newPosts = posts.map((post) => {
+        const newPosts = posts.current.map((post) => {
           if(post.id === selectedPostId){
             post.likes = post.likes + 1;
-            console.log(post.likes)
+            post.liked = true;
           }
           return post;
         });
-        console.log(selectedPostId);
+        console.log(posts);
 
         return newPosts;
       },
@@ -74,20 +109,19 @@ const Layout = ({children}) => {
         //Update likes in database
 
         //Use this for testing purposes
-       const newPosts =  posts.map((post) => {
+       const newPosts =  posts.current.map((post) => {
           if(post.id === selectedPostId){
             post.likes = post.likes - 1;
-            console.log(post.likes);
+            post.liked = false;
           }
           return post;
         });
-        console.log(selectedPostId);
         return newPosts;
         // setSelectedPost({...selectedPost,likes:selectedPost.likes--})
       },
-      posts:posts,
+      posts:posts.current,
       updatePosts: (newPosts) => {
-        setPosts(newPosts);
+        posts.current = newPosts
       }
     },
 
@@ -105,6 +139,19 @@ const Layout = ({children}) => {
             setBookmarks(bookmarks.filter((bookmark) => bookmark != selectedBookmark));
           }
       },
+      posts:{
+        liked:likedPosts.current,
+        addLikedPost: (newPost) => {
+          const oldList = likedPosts.current;
+          oldList.push(newPost);
+          likedPosts.current = oldList; 
+         
+        },
+        removeLikedPost: (id) => {
+          const oldList = likedPosts.current.filter((post) => post.id !== id);
+          likedPosts.current = oldList; 
+        }
+      }
     }
   }
   // const [appInfo, setAppInfo] = useState({

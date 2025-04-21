@@ -3,15 +3,18 @@ import { createContext } from "react";
 
 export const AppContext = createContext({
     post:{
-        changeCurrent: ({title,description,username,steps,ingredients,likes,liked}) => {},
+        changeCurrent: ({id,title,description,username,steps,ingredients,likes,country,liked,followed}) => {},
         current:{
+            id:0,
             username:"",
             description:"",
             title:"",
             steps:[],
             ingredients:[],
             likes:0,
-            liked:false
+            country:"",
+            liked:false,
+            followed:false
         },
         addLike:(selectedPostId) => {},
         removeLike:(selectedPostId) => {},
@@ -26,6 +29,15 @@ export const AppContext = createContext({
             },
             deleteBookmark: (selectedBookmark) => {
                 
+            }
+        },
+        posts:{
+            liked:[],
+            addLikedPost: (newPost) => {
+
+            },
+            removeLikedPost: (id) => {
+
             }
         }
     }

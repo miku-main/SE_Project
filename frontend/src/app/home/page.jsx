@@ -23,7 +23,7 @@ const Home = () => {
 
     const [selectedCountryList, setSelectedCountryList] = useState([]);
     const [selectedIngredientList, setSelectedIngredientList] = useState([]);
-    const postTitles = useRef(postData.filter((post) => post.followed === followingActive).map((post) => {
+    const postTitles = useRef(appInfo.post.posts.filter((post) => post.followed === followingActive).map((post) => {
         return post.title;
     }));
 
@@ -39,25 +39,25 @@ const Home = () => {
         return matched;
     }
 
-    useEffect(() => {
-        let result = {
-            followed:[],
-            notFollowed:[]
-        };
+    // useEffect(() => {
+    //     let result = {
+    //         followed:[],
+    //         notFollowed:[]
+    //     };
 
       
-        appInfo.post.posts.map((post) => {
-            if(post.followed){
-                result.followed.push(post)
-            }
-            else{
-                result.notFollowed.push(post);
-            }
-        })
+    //     appInfo.post.posts.map((post) => {
+    //         if(post.followed){
+    //             result.followed.push(post)
+    //         }
+    //         else{
+    //             result.notFollowed.push(post);
+    //         }
+    //     });
       
-        setFilter({...filter, result});
-        console.log(filter.result)
-    },[]);
+    //     setFilter({...filter, result});
+    //     console.log(filter.result)
+    // },[]);
 
     useEffect(() => {
         if(selectedCountryList.length !== 0 || selectedIngredientList.length !== 0){
@@ -86,6 +86,7 @@ const Home = () => {
             })
         }
         else{
+            console.log("Test 1")
             let result = []
 
             if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
@@ -121,7 +122,7 @@ const Home = () => {
                 selectedIngredientList,
                 result : {
                     followed: followingActive ? result : filter.result.followed,
-                    notFollowed: !followingActive ? result : filter.result.notFollowed
+                    notFollowed:!followingActive ? result : filter.result.notFollowed
                 }
             })
         }
@@ -167,7 +168,7 @@ const Home = () => {
             })
         }
         else{
-            postData.map((post) => {
+            appInfo.post.posts.map((post) => {
                 if(searchedData.indexOf(post.title) !== -1 && post.followed == followingActive){
                     if(selectedCountryList.length === 0 && selectedIngredientList.length === 0){
                         console.log("Option 1")
@@ -202,6 +203,10 @@ const Home = () => {
         return result;
     }
 
+    const updateLikes = (newPosts) => {
+        appInfo.post.updatePosts(newPosts);
+    }
+
     const currentScreen = (screenName) => {
         if(screenName === "Global"){
                 return (
@@ -212,7 +217,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post updateLikes={updateLikes} liked={post.liked} country={post.country} id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"}  width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
@@ -231,7 +236,7 @@ const Home = () => {
                                 return (
                                     <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post updateLikes={updateLikes} liked={post.liked} country={post.country} id={post.id} likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid2>
                                 )
@@ -261,13 +266,13 @@ const Home = () => {
                 <Box sx={{width:"100%", marginBottom:"1rem"}}>
                     <Box sx={{display:"flex", float:"right", marginRight:"2%"}}>
                         <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => post.followed).map((post) => {
+                            postTitles.current = appInfo.post.posts.filter((post) => post.followed).map((post) => {
                                 return post.title;
                             })
                             setFollowingActive(true);
                         }} sx={{color:"white", backgroundColor: followingActive ? "#FAADAD" : "rgba(250,173,173,0.5)", borderTopRightRadius:"0", borderBottomRightRadius:"0"}}>Following</Button>
                         <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => !post.followed).map((post) => {
+                            postTitles.current = appInfo.post.posts.filter((post) => !post.followed).map((post) => {
                                 return post.title;
                             })
                             setFollowingActive(false);

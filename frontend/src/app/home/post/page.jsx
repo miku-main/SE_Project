@@ -11,8 +11,11 @@ import { AppContext } from "../../contexts";
 const PostPage = () => {
     
     const appInfo = useContext(AppContext);
-    const {id,title , description, username, steps, ingredients, likes} = appInfo.post.current;
-    
+    const {id,title, description, username, steps, ingredients, likes, country,liked,followed} = appInfo.post.current;
+    const updateLikes = (newPosts) => {
+        appInfo.post.updatePosts(newPosts);
+    }
+
     return (
         <Box width={"inherit"}>
             <Box sx={{marginLeft:"5%", marginTop:"2%"}}>
@@ -24,7 +27,7 @@ const PostPage = () => {
             </Box>
             <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", width:"inherit"}}>
                 <Box sx={{ width:"40rem", marginBottom:"1%"}}>
-                    <Post id={id} likes={likes} title={title} isFromFollowedUser={true} type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={description} username={username}/>
+                    <Post updateLikes={updateLikes} steps={steps} ingredients={ingredients} liked={liked} country={country} id={id} likes={likes} title={title} isFromFollowedUser={followed} type={"post"} imageHeight={"25rem"} width={"40rem"} description={description} username={username}/>
                 </Box>
                 <Box sx={{ width:"40rem", marginBottom:"2%"}}>
                     <Typography sx={{marginBottom:"2%"}} color="white" variant={"h5"}>Ingredients</Typography>
