@@ -7,4 +7,6 @@ export const groupList = [
     "Randos",
     "Randos",
     "Randos",
+    "Randos",
+    "Randos",
 ]
