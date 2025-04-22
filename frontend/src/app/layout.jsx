@@ -83,8 +83,8 @@ const Layout = ({children}) => {
                           <UserButton />
                       </SignedIn>
                       <SignedOut>
-                          <SignInButton mode="modal" aftersigninurl="" afterSignUpUrl="">
-                              <button></button>
+                          <SignInButton mode="modal" aftersigninurl="" aftersignupurl="">
+                              <button>Login</button>
                           </SignInButton>
                       </SignedOut>
                   </ClerkLoaded>
