@@ -1,6 +1,7 @@
 "use client"
 
-import { Box, Grid2, Switch, Typography, Button } from "@mui/material";
+import { Box, Switch, Typography, Button } from "@mui/material";
+import Grid from '@mui/material/Grid';
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
 import { useEffect, useRef, useState } from "react";
@@ -207,38 +208,38 @@ const Home = () => {
         if(screenName === "Global"){
                 return (
                 <Box sx={{flexGrow:1}}>
-                    <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
+                    <Grid container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
                         {filter.result.notFollowed.map((post,index) => {
                             if(!post.followed){
                                 return (
-                                    <Grid2 key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
+                                    <Grid key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
                                             <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
-                                    </Grid2>
+                                    </Grid>
                                 )
                             }
                         })}
-                    </Grid2>
+                    </Grid>
                 </Box>
             )
         }
         else if(screenName == "Following"){
             return(
                 <Box sx={{flexGrow:1}}>
-                    <Grid2 container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
+                    <Grid container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
                         {filter.result.followed.map((post,index) => {
                             if(post.followed){
                                 return (
-                                    <Grid2 key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
+                                    <Grid key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
                                             <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
-                                    </Grid2>
+                                    </Grid>
                                 )
                             }
                         })}
-                    </Grid2>
+                    </Grid>
                 </Box>
             )
         }
