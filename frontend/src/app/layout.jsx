@@ -6,6 +6,8 @@ import {Box, Container} from "@mui/material"
 import Navigator from '../components/global/navigator';
 import { AppContext } from './contexts';
 import { connectMongoDB } from '../../config/mongodb';
+import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
 
 
 
@@ -63,24 +65,49 @@ const Layout = ({children}) => {
 
   connectMongoDB();
   return (
-    <html>
-      <body>
-        <AppContext.Provider value={appSettings}>
-          <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={false}>
-            <Box sx={layoutStyle}>
-              <Box sx={innerLayoutStyle}>
-                <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
-                  {children}
-                </Box>
-                <Box sx={navigatorContainerStyle}>
-                  <Navigator/>
-                </Box>
-              </Box>
-            </Box>
-          </Container>
-        </AppContext.Provider>
-      </body>
-    </html>
+      <html lang="en">
+        <body>
+          <ClerkProvider>
+              <div>
+                  <div>
+                      {/*
+                      <Image src="/lol.svg" height={40} width={40} alt="Logo" />
+                      */}
+                      <h1>
+                          Belly
+                      </h1>
+
+                  </div>
+                  <ClerkLoading>
+                  </ClerkLoading>
+                  <ClerkLoaded>
+                      <SignedIn>
+                          <UserButton />
+                      </SignedIn>
+                      <SignedOut>
+                          <SignInButton mode="modal" aftersigninurl="" aftersignupurl="">
+                              <button>Login</button>
+                          </SignInButton>
+                      </SignedOut>
+                  </ClerkLoaded>
+              </div>
+              <AppContext.Provider value={appSettings}>
+                <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={false}>
+                  <Box sx={layoutStyle}>
+                    <Box sx={innerLayoutStyle}>
+                      <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
+                        {children}
+                      </Box>
+                      <Box sx={navigatorContainerStyle}>
+                        <Navigator/>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Container>
+              </AppContext.Provider>
+          </ClerkProvider>
+        </body>
+      </html>
   )
 }
 
