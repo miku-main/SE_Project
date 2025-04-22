@@ -1,87 +1,99 @@
-"use client"
+// app/layout.jsx
+"use client";
 
-import React, { useState } from 'react';
-import '../../src/index.css';
-import {Box, Container} from "@mui/material"
-import Navigator from '../components/global/navigator';
-import { AppContext } from './contexts';
-import { connectMongoDB } from '../../config/mongodb';
+import React, { useState } from "react";
+import { AppContext } from "./contexts";
+import { connectMongoDB } from "../../config/mongodb";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  UserButton,
+} from "@clerk/nextjs";
+import Navigator from "../components/global/navigator";
+import { Container, Box } from "@mui/material";
 
+connectMongoDB();
 
-
-const Layout = ({children}) => {
-
-  const navigatorContainerStyle = {
-    position:"fixed",
-    bottom:"5%",
-  }
-  
-  const layoutStyle = {
-    backgroundColor:"#D9D9D9",
-    height:"100vh"
-  }
-
-  const innerLayoutStyle = {
-    display:"flex",
-    justifyContent:"center",
-    height:"100%",
-    width:"100%"
-  }
-
-
+export default function RootLayout({ children }) {
+  // 1. Your post‑selection state & context
   const [selectedPost, setSelectedPost] = useState({
-    title:"",
-    description:"",
-    username:"",
-    steps:[],
-    ingredients:[]
-  })
+    title: "",
+    description: "",
+    username: "",
+    steps: [],
+    ingredients: [],
+  });
   const appSettings = {
-    post:{
-      changeCurrent: ({title,description,username,ingredients,steps}) => {
-        setSelectedPost({
-          title,
-          description,
-          username,
-          ingredients,
-          steps
-        })
-      },
-      current:selectedPost
-    }
-  }
-  // const [appInfo, setAppInfo] = useState({
-  //   post:{
-  //     changeCurrent: () => {},
-  //     current:{
-  //       username:"",
-  //       description:"",
-  //       title:""
-  //     }
-  //   }
-  // });
+    post: {
+      changeCurrent: ({ title, description, username, ingredients, steps }) =>
+        setSelectedPost({ title, description, username, ingredients, steps }),
+      current: selectedPost,
+    },
+  };
 
-  connectMongoDB();
   return (
-    <html>
-      <body>
-        <AppContext.Provider value={appSettings}>
-          <Container sx={{overflowY:"hidden"}} disableGutters={true} maxWidth={false}>
-            <Box sx={layoutStyle}>
-              <Box sx={innerLayoutStyle}>
-                <Box sx={{height:"inherit", overflowY:"auto", width:"inherit"}}>
-                  {children}
+    <html lang="en">
+      {/* this <head/> lets Next inject title/meta etc */}
+      <head />
+      <body style={{ margin: 0 }}>
+        <ClerkProvider>
+          <Box sx={{ bgcolor: "#D9D9D9", minHeight: "100vh" }}>
+            <SignedIn>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100vh",
+                }}
+              >
+                {/* — Header — */}
+                <Box
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <h1>Belly</h1>
+                  <UserButton />
                 </Box>
-                <Box sx={navigatorContainerStyle}>
-                  <Navigator/>
-                </Box>
+
+                {/* — Main + Navigator — */}
+                <AppContext.Provider value={appSettings}>
+                  <Container
+                    disableGutters
+                    maxWidth={false}
+                    sx={{
+                      flex: 1,
+                      display: "flex",
+                      position: "center",
+                    }}
+                  >
+                    <Box sx={{ flex: 1, overflowY: "auto", p: 2 }}>
+                      {children}
+                    </Box>
+                    <Box
+                      sx={{
+                        position: "fixed",
+                        bottom: "5%",
+                        right: "50%",
+                      }}
+                    >
+                      <Navigator />
+                    </Box>
+                  </Container>
+                </AppContext.Provider>
               </Box>
-            </Box>
-          </Container>
-        </AppContext.Provider>
+            </SignedIn>
+
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </Box>
+        </ClerkProvider>
       </body>
     </html>
-  )
+  );
 }
-
-export default Layout;
