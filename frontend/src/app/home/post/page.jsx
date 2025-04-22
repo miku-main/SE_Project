@@ -27,7 +27,7 @@ const PostPage = () => {
             </Box>
             <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", width:"inherit"}}>
                 <Box sx={{ width:"40rem", marginBottom:"1%"}}>
-                    <Post likes={likes} title={title} isFromFollowedUser={true} type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={description} username={username}/>
+                    <Post title={title} isFromFollowedUser={true} type={"post"} imageHeight={"25rem"} cursor={"default"} height={"50rem"} width={"40rem"} description={description} username={username}/>
                 </Box>
                 <Box sx={{ width:"40rem", marginBottom:"2%"}}>
                     <Typography sx={{marginBottom:"2%"}} color="white" variant={"h5"}>Ingredients</Typography>
