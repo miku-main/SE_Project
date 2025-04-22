@@ -5,6 +5,7 @@ import '../../src/index.css';
 import {Box, Container} from "@mui/material"
 import Navigator from '../components/global/navigator';
 import { AppContext } from './contexts';
+import { connectMongoDB } from '../../config/mongodb';
 import { ClerkProvider } from '@clerk/nextjs'
 import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
 
@@ -62,6 +63,7 @@ const Layout = ({children}) => {
   //   }
   // });
 
+  connectMongoDB();
   return (
       <html lang="en">
         <body>

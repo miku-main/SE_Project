@@ -69,7 +69,7 @@ const Search = ({data, handleChange}) => {
                     <InputBase onChange={(event) => {
                         clearTimeout(searchTimeout)
                         searchTimeout = setTimeout(() => {
-                            handleChange(search(data,event.target.value));
+                            handleChange(search(data,event.target.value),true);
                         },1500);
 
                     }} fullWidth={true} sx={{ml:1,flex:1}} inputProps={{"aria-label": "Search"}}/>
