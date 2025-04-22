@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectMongoDB  from "../../../../config/mongodb";
+import {connectMongoDB}  from "../../../../config/mongodb";
 import Post from "../../../models/postSchema";
 
 
