@@ -78,13 +78,6 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                             </Typography>
                         </Box>
                     </Box>
-                    <Box>
-                        <ButtonBase sx={{width:"fit-content"}} onClick={() => {
-                            setBookmarkActiveState(!bookmarkActiveState)
-                        }}>
-                            <Bookmark isActive={bookmarkActiveState}/>
-                        </ButtonBase>
-                    </Box>
                 </Box>
             </Box>
         </Box>
