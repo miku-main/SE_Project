@@ -38,9 +38,11 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                 <Box>
                     <Card sx={{backgroundColor:"transparent", color:"white", boxShadow:"none", maxWidth:width}}>
                         <CardHeader avatar={
-                            <Link href={{pathname:"/profile", query:{username:"1234"}}}>
+                            <Link style={{textDecoration:"none"}} href={{pathname:"/profile", query:{username:"1234"}}}>
                                 <Avatar sx={{bgcolor:"#FAADAD", cursor:"pointer"}}>
-                                    {username.toUpperCase().charAt(0)}
+                                    <Typography>
+                                        {username.toUpperCase().charAt(0)}
+                                    </Typography>
                                 </Avatar>
                             </Link>
                             }
