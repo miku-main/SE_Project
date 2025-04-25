@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Grid2, Typography, Stack, Box } from '@mui/material';
+import { Paper, Grid, Typography, Stack, Box } from '@mui/material';
 import { useEffect, useRef, useState } from "react";
 import { groupList } from "./testdata";
 import Post from "../../components/home/post";
@@ -36,9 +36,9 @@ const Group = () => {
             </Box>
             {/* Content with Grid2 */}
             <Box sx={{ paddingTop: '2rem', paddingBottom: '6rem', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: 'calc(100vh - 10rem)'}}>
-                <Grid2 container sx={{ flexGrow: 1, width: '100%'}}>
+                <Grid container sx={{ flexGrow: 1, width: '100%'}}>
                     {/* Left section */}
-                    <Grid2 xs={4} sx={{ paddingLeft: '2rem', paddingRight: '1rem', overflowY: 'auto', height: '100%', width: '27%', '&::-webkit-scrollbar': {display: 'none'}}}>
+                    <Grid xs={4} sx={{ paddingLeft: '2rem', paddingRight: '1rem', overflowY: 'auto', height: '100%', width: '27%', '&::-webkit-scrollbar': {display: 'none'}}}>
                         {/* new group button */}
                         <Paper elevation={2}
                             onClick={() => console.log("Clicked new group")}
@@ -64,12 +64,12 @@ const Group = () => {
                         {groupList.map((group, index) => (
                             <GroupCard key={index} name={group} onClick={() => console.log(`Clicked group: ${group}`)} />
                         ))}
-                    </Grid2>
+                    </Grid>
                     {/* Divider */}
-                    <Grid2 xs={1} sx={{ width: '1rem' }} />
-                    <Grid2 xs={1} sx={{ width: '3px', borderRadius: '3px', backgroundColor: '#FAADAD', height: '100%' }} />
+                    <Grid xs={1} sx={{ width: '1rem' }} />
+                    <Grid xs={1} sx={{ width: '3px', borderRadius: '3px', backgroundColor: '#FAADAD', height: '100%' }} />
                     {/* Middle section */}
-                    <Grid2 xs={5} sx={{ paddingLeft: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', height: '100%', width: '44%' }}>
+                    <Grid xs={5} sx={{ paddingLeft: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', height: '100%', width: '44%' }}>
                         {/* Add posts here */}
                         {postData.map((post, index) => {
                             return (
@@ -90,12 +90,12 @@ const Group = () => {
                                 </Box>
                             );
                         })}
-                    </Grid2>
+                    </Grid>
                     {/* Divider */}
-                    <Grid2 xs={1} sx={{ width: '3px', borderRadius: '3px', backgroundColor: '#FAADAD', height: '100%' }} />
-                    <Grid2 xs={1} sx={{ width: '1rem' }} />
+                    <Grid xs={1} sx={{ width: '3px', borderRadius: '3px', backgroundColor: '#FAADAD', height: '100%' }} />
+                    <Grid xs={1} sx={{ width: '1rem' }} />
                     {/* Right section */}
-                    <Grid2 xs={2} sx={{ paddingLeft: '1rem', paddingRight: '1rem', overflowY: 'auto', height: '100%', width: '24%', '&::-webkit-scrollbar': {display: 'none'}}}>
+                    <Grid xs={2} sx={{ paddingLeft: '1rem', paddingRight: '1rem', overflowY: 'auto', height: '100%', width: '24%', '&::-webkit-scrollbar': {display: 'none'}}}>
                         <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem' }}>
                             Members
                         </Typography>
@@ -108,9 +108,9 @@ const Group = () => {
                                 </Typography>
                             </Box>
                         ))}
-                    </Grid2>
+                    </Grid>
 
-                </Grid2>
+                </Grid>
             </Box>
             {/* footer */}
             <Box sx={{position: 'fixed', bottom: 0, width: '100%', height: '128px ', backgroundColor: '#FAADAD', padding: '2rem', textAlign: 'center'}}></Box>

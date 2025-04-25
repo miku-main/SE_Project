@@ -54,7 +54,7 @@ export const postData = [
   { 
     id: 1, 
     username: "randomUser1", 
-    likes: 10, 
+    likes: 0, 
     description: "A classic Italian dish made with layers of pasta, meat sauce, and melted cheese.", 
     title: "Lasagna", 
     followed: true,
@@ -73,7 +73,7 @@ export const postData = [
   { 
     id: 2, 
     username: "tech_guy42", 
-    likes: 25, 
+    likes: 0, 
     description: "A crispy, golden fried chicken served with a side of creamy mashed potatoes.", 
     title: "Fried Chicken", 
     followed: false,
@@ -90,7 +90,7 @@ export const postData = [
   { 
     id: 3, 
     username: "bookworm99", 
-    likes: 34, 
+    likes: 0, 
     description: "Thinly sliced raw fish served with soy sauce, wasabi, and pickled ginger.", 
     title: "Sushi", 
     followed: true,
@@ -109,7 +109,7 @@ export const postData = [
   { 
     id: 4, 
     username: "coffee_lover", 
-    likes: 50, 
+    likes: 0, 
     description: "Soft and fluffy bread rolls, often served with butter or jam.", 
     title: "Dinner Rolls", 
     followed: false,
@@ -128,7 +128,7 @@ export const postData = [
   { 
     id: 5, 
     username: "guitarhero22", 
-    likes: 12, 
+    likes: 0, 
     description: "A creamy soup made with pureed potatoes and leeks, served warm.", 
     title: "Potato Leek Soup", 
     followed: true,
@@ -146,7 +146,7 @@ export const postData = [
   { 
     id: 6, 
     username: "nature_lover", 
-    likes: 45, 
+    likes: 0, 
     description: "Juicy steak grilled to perfection, served with your choice of sides.", 
     title: "Grilled Steak", 
     followed: false,
@@ -163,7 +163,7 @@ export const postData = [
   { 
     id: 7, 
     username: "city_slicker", 
-    likes: 18, 
+    likes: 0, 
     description: "A rich and creamy dessert made from chocolate, eggs, and cream, served chilled.", 
     title: "Chocolate Mousse", 
     followed: true,
@@ -180,7 +180,7 @@ export const postData = [
   { 
     id: 8, 
     username: "running_man", 
-    likes: 21, 
+    likes: 0, 
     description: "A fresh mix of lettuce, tomatoes, cucumbers, and a tangy vinaigrette dressing.", 
     title: "Caesar Salad", 
     followed: false,
@@ -196,7 +196,7 @@ export const postData = [
   { 
     id: 9, 
     username: "art_fanatic", 
-    likes: 27, 
+    likes: 0, 
     description: "A flavorful curry dish made with marinated chicken, spices, and a creamy sauce.", 
     title: "Butter Chicken", 
     followed: true,
@@ -212,7 +212,7 @@ export const postData = [
   { 
     id: 10, 
     username: "traveller88", 
-    likes: 32, 
+    likes: 0, 
     description: "Soft noodles stir-fried with vegetables, soy sauce, and your choice of protein.", 
     title: "Chow Mein", 
     followed: false,
@@ -228,7 +228,7 @@ export const postData = [
   { 
     id: 11, 
     username: "gamer_x", 
-    likes: 13, 
+    likes: 0, 
     description: "Fluffy pancakes topped with syrup, butter, and a sprinkle of powdered sugar.", 
     title: "Pancakes", 
     followed: true,
@@ -244,7 +244,7 @@ export const postData = [
   { 
     id: 12, 
     username: "movie_buff", 
-    likes: 40, 
+    likes: 0, 
     description: "Thinly sliced cured meats, cheeses, olives, and bread served as an appetizer.", 
     title: "Antipasto", 
     followed: false,

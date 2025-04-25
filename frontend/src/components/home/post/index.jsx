@@ -1,7 +1,7 @@
 "use client"
 
 import { Avatar, CardContent, CardHeader, CardMedia, Typography, Box, Card, Button, ButtonBase } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Heart from "./assets/heart";
 import Bookmark from "./assets/bookmark";
 import Link from 'next/link';
@@ -10,21 +10,21 @@ import { AppContext } from "../../../app/contexts";
 import { postData } from "../../../constants";
 
 
-const Post = ({description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title, likes}) => {
-
-    const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
-    const [heartActiveState, setHeartActiveState] = useState(false);
+const Post = ({id,updateFollowers,description,username, width,ingredients, steps,imageHeight, type, isFromFollowedUser, title, initialHeartState}) => {
 
     const appInfo = useContext(AppContext);
+
+    const [bookmarkActiveState, setBookmarkActiveState] = useState(false);
+    const [heartActiveState, setHeartActiveState] = useState(initialHeartState);
 
 
     const postType = () => {
         if(type === "home"){
             return (
                 <Link onClick={() => {
-                    appInfo.post.changeCurrent({title,description,username,steps,ingredients});
+                    appInfo.post.changeCurrent({id,title,description,username,steps,ingredients,initialHeartState});
                 }} href={{pathname:"/home/post", query:{id:"1234"}}} as={`/home/post?id=${1234}`}>
-                    <CardMedia sx={{border:"1px solid red",width:"97%", height:imageHeight}} component={"img"} alt="post"/>
+                    <CardMedia sx={{border:"1px solid red",width:"97%", height:imageHeight, textDecoration:"none"}} component={"img"} alt="post"/>
                 </Link> 
             )
         }
@@ -48,7 +48,9 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                             }
                             title={username}
                             action={
-                               isFromFollowedUser ? <></> : <Button sx={{backgroundColor:"#FAADAD", color:"white", width:"7rem", marginLeft:"1rem"}}>Follow</Button>
+                               isFromFollowedUser ? <></> : <Button onClick={() => {
+
+                               }} sx={{backgroundColor:"#FAADAD", color:"white", width:"7rem", marginLeft:"1rem"}}>Follow</Button>
                             }
                         />
 
@@ -67,16 +69,19 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                 <Box sx={{marginLeft:"1rem", marginTop:"4.5rem"}}>
                     <Box sx={{marginBottom:"0.5rem", display:"flex"}}>
                         <ButtonBase sx={{marginRight:"0.5rem"}} onClick={() => {
+                            // appInfo.post.addPostLike(username,'',id)
+                            // appInfo.post.deletePostLike(id)
+                            if(heartActiveState){
+                                appInfo.post.deletePostLike(username,'user',id)
+                            }
+                            else{
+                                appInfo.post.addPostLike(username,'user',id)
+                            }
                             setHeartActiveState(!heartActiveState)
-                        }}>
-                            <Heart isActive={heartActiveState}/>
-                        </ButtonBase>
 
-                        <Box>
-                            <Typography color="white" fontWeight={"bolder"}>
-                                {likes}
-                            </Typography>
-                        </Box>
+                        }}>
+                            <Heart isActive={heartActiveState === null ? false : heartActiveState}/>
+                        </ButtonBase>
                     </Box>
                 </Box>
             </Box>

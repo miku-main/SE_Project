@@ -1,7 +1,7 @@
 // app/layout.jsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppContext } from "./contexts";
 import { connectMongoDB } from "../../config/mongodb";
 import {
@@ -17,19 +17,84 @@ import { Container, Box } from "@mui/material";
 connectMongoDB();
 
 export default function RootLayout({ children }) {
+
+  useEffect(() =>{
+    const doStuff = async () => {
+      await appSettings.post.getPostsLiked()
+      console.log(appSettings.post.postsLiked)
+
+    }
+
+    doStuff();
+  },[])
   // 1. Your post‑selection state & context
   const [selectedPost, setSelectedPost] = useState({
+    id:0,
     title: "",
     description: "",
     username: "",
     steps: [],
     ingredients: [],
   });
+
+  const [postsLiked, setPostsLiked] = useState([]);
   const appSettings = {
     post: {
-      changeCurrent: ({ title, description, username, ingredients, steps }) =>
-        setSelectedPost({ title, description, username, ingredients, steps }),
+      changeCurrent: ({ id,title, description, username, ingredients, steps, initialHeartState }) =>
+        setSelectedPost({id, title, description, username, ingredients, steps, initialHeartState }),
       current: selectedPost,
+      getPostsLiked: async () => {
+        const likes = await fetch('src/app/api/postLiked', {
+          method:"GET"
+        })
+        const data = await likes.json();
+        // setPostsLiked(data.postsLiked.map((item) => {
+        //   return {
+        //     owner:item.owner,
+        //     likedBy:item.likedBy,
+        //     postId:item.postId
+        //   }
+        // }))
+        
+        return data.postsLiked.map((item) => {
+          return {
+            owner:item.owner,
+            likedBy:item.likedBy,
+            postId:item.postId
+          }
+        })
+      },
+      addPostLike: async (owner, likedBy, postId) => {
+        const formData = {
+          owner,
+          likedBy,
+          postId
+        }
+        await fetch("src/app/api/postLiked", {
+          method:"POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(formData)
+        })
+      },
+      deletePostLike: async (owner, likedBy, postId) => {
+        const formData = {
+          owner, likedBy, postId
+        }
+        await fetch("src/app/api/postLiked", {
+          method:"DELETE",
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+        
+      },
+      postsLiked: postsLiked,
+      updatePostsLiked: (data) => {
+        setPostsLiked(data)
+      }
     },
   };
 

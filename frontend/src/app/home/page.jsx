@@ -4,11 +4,32 @@ import { Box, Switch, Typography, Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import Search from "../../components/home/search";
 import Post from "../../components/home/post";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Dropdown from "../../components/global/dropdown";
 import {listOfCountries, listOfIngredients, postData} from "../../constants";
+import { AppContext } from "../contexts";
 const Home = () => {
 
+    const appInfo = useContext(AppContext)
+    const [change, setChange] = useState([]);
+
+
+    // const updateFollowers = (post) => {
+    //     setFilter(...filter, {...result, followed:[]})
+    // }
+    useEffect(() =>{
+        const doStuff = async () => {
+          const data = await appInfo.post.getPostsLiked();
+        //   appInfo.post.updatePostsLiked(data);
+        //   setChange(data)
+        setPostsLiked(data)
+          console.log(appInfo.post.postsLiked)
+        }
+    
+
+        doStuff();
+  
+      },[])
     const [filter,setFilter] = useState({
         result:{
             followed:[],
@@ -25,6 +46,9 @@ const Home = () => {
     const postTitles = useRef(postData.filter((post) => post.followed === followingActive).map((post) => {
         return post.title;
     }));
+
+    const [postsLiked, setPostsLiked] = useState(null);
+    
 
     const recentSearchedData = useRef(postTitles.current);
     const containsIngredients = (selectedIngredients, ingredients) => {
@@ -211,10 +235,30 @@ const Home = () => {
                     <Grid container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
                         {filter.result.notFollowed.map((post,index) => {
                             if(!post.followed){
+
+                                console.log(appInfo.post.postsLiked)
+                                let temp = false;
+                        
+                                // appInfo.post.postsLiked.forEach((item) => {
+                                
+                                //     if(item.owner === post.username && item.likedBy === "user" && item.postId === post.id){
+                                //         temp = true;      
+                                //         console.log(post)                              
+                                //     }
+                                // })
+                                postsLiked.forEach((item) => {
+                                
+                                    if(item.owner === post.username && item.likedBy === "user" && item.postId === post.id){
+                                        temp = true;      
+                                        console.log(post)                              
+                                    }
+                                })
+                        
+
                                 return (
                                     <Grid key={post.id} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post initialHeartState={temp} id={post.id} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid>
                                 )
@@ -230,10 +274,24 @@ const Home = () => {
                     <Grid container  direction={"row"}  columns={{ xs: 4, sm: 8, md: 12 }}>
                         {filter.result.followed.map((post,index) => {
                             if(post.followed){
+                                let temp = false;
+                        
+                                // appInfo.post.postsLiked.forEach((item) => {
+                                //     if(item.owner === post.username && item.likedBy === "user" && item.postId === post.id){
+                                //         temp = true;                                    
+                                //     }
+                                // })
+                                postsLiked.forEach((item) => {
+                                
+                                    if(item.owner === post.username && item.likedBy === "user" && item.postId === post.id){
+                                        temp = true;      
+                                        console.log(post)                              
+                                    }
+                                })
                                 return (
                                     <Grid key={index} item size={{ xs: 2, sm: 4, md: 4 }}>
                                         <Box sx={{margin:"auto", width:"fit-content"}}>
-                                            <Post likes={post.likes} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
+                                            <Post initialHeartState={temp} id={post.id} ingredients={post.ingredients} steps={post.steps} title={post.title} isFromFollowedUser={post.followed} type={"home"} imageHeight={"10rem"} cursor={"pointer"} width={"20rem"} description={post.description} username={post.username}/>
                                         </Box>
                                     </Grid>
                                 )
@@ -246,39 +304,43 @@ const Home = () => {
     }
     return (
         <Box sx={{height:"inherit"}}>
-            <Box sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                <Box sx={{width:"fit-content", marginBottom:"1%",marginTop:"2%"}}>
-                    <Box sx={{marginBottom:"2%"}}>
-                        <Search handleChange={handleSearchChange} data={postTitles.current}/>
-                    </Box>
-                    <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
-                        <Box sx={{marginRight:"10%"}}>
-                            <Dropdown handleChange={handleCountryDropdownChange} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
-                        </Box>
-                        <Box>
-                            <Dropdown handleChange={handleIngredientDropdownChange} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{width:"100%", marginBottom:"1rem"}}>
-                    <Box sx={{display:"flex", float:"right", marginRight:"2%"}}>
-                        <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => post.followed).map((post) => {
-                                return post.title;
-                            })
-                            setFollowingActive(true);
-                        }} sx={{color:"white", backgroundColor: followingActive ? "#FAADAD" : "rgba(250,173,173,0.5)", borderTopRightRadius:"0", borderBottomRightRadius:"0"}}>Following</Button>
-                        <Button onClick={() => {
-                            postTitles.current = postData.filter((post) => !post.followed).map((post) => {
-                                return post.title;
-                            })
-                            setFollowingActive(false);
-                        }} sx={{color:"white", backgroundColor: followingActive ? "rgba(250,173,173,0.5)" :"#FAADAD" ,borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}}>Global</Button>
-                    </Box>
-                </Box>
 
-                {followingActive ? currentScreen("Following") : currentScreen("Global")}
-            </Box>
+            {postsLiked !== null && (
+                            <Box sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+                            <Box sx={{width:"fit-content", marginBottom:"1%",marginTop:"2%"}}>
+                                <Box sx={{marginBottom:"2%"}}>
+                                    <Search handleChange={handleSearchChange} data={postTitles.current}/>
+                                </Box>
+                                <Box sx={{display:"flex", justifyContent:"space-between", float:"left", paddingLeft:"5%"}}>
+                                    <Box sx={{marginRight:"10%"}}>
+                                        <Dropdown handleChange={handleCountryDropdownChange} selectedValue={selectedCountryList} isMultiple={true} placeholder={"Countries"} data={listOfCountries}/>
+                                    </Box>
+                                    <Box>
+                                        <Dropdown handleChange={handleIngredientDropdownChange} selectedValue={selectedIngredientList} isMultiple={true} placeholder={"Ingredients"} data={listOfIngredients}/>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box sx={{width:"100%", marginBottom:"1rem"}}>
+                                <Box sx={{display:"flex", float:"right", marginRight:"2%"}}>
+                                    <Button onClick={() => {
+                                        postTitles.current = postData.filter((post) => post.followed).map((post) => {
+                                            return post.title;
+                                        })
+                                        setFollowingActive(true);
+                                    }} sx={{color:"white", backgroundColor: followingActive ? "#FAADAD" : "rgba(250,173,173,0.5)", borderTopRightRadius:"0", borderBottomRightRadius:"0"}}>Following</Button>
+                                    <Button onClick={() => {
+                                        postTitles.current = postData.filter((post) => !post.followed).map((post) => {
+                                            return post.title;
+                                        })
+                                        setFollowingActive(false);
+                                    }} sx={{color:"white", backgroundColor: followingActive ? "rgba(250,173,173,0.5)" :"#FAADAD" ,borderTopLeftRadius:"0", borderBottomLeftRadius:"0"}}>Global</Button>
+                                </Box>
+                            </Box>
+            
+                            {followingActive ? currentScreen("Following") : currentScreen("Global")}
+                        </Box>
+            )}
+
         </Box>
     )
 }
