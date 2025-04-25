@@ -37,9 +37,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       {/* this <head/> lets Next inject title/meta etc */}
       <head />
-      <body style={{ margin: 0 }}>
+      <body style={{ margin: 0, boxSizing:"border-box",backgroundColor: "#D9D9D9", minHeight: "100vh", overflowX:"hidden"  }}>
         <ClerkProvider>
-          <Box sx={{ bgcolor: "#D9D9D9", minHeight: "100vh" }}>
+        <AppContext.Provider value={appSettings}>
+          <Box>
             <SignedIn>
               <Box
                 sx={{
@@ -49,28 +50,31 @@ export default function RootLayout({ children }) {
                 }}
               >
                 {/* — Header — */}
-                <Box
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <h1>Belly</h1>
-                  <UserButton />
-                </Box>
 
                 {/* — Main + Navigator — */}
-                <AppContext.Provider value={appSettings}>
+          
                   <Container
                     disableGutters
                     maxWidth={false}
                     sx={{
                       flex: 1,
                       display: "flex",
+                      flexDirection:"column",
                       position: "center",
                     }}
                   >
+                    <Box
+                      sx={{
+                        pl:5,
+                        pr:5,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        border:"1px solid red"
+                      }}
+                    >
+                      <h1>Belly</h1>
+                      <UserButton />
+                    </Box>
                     <Box sx={{ flex: 1, overflowY: "auto", p: 2 }}>
                       {children}
                     </Box>
@@ -84,7 +88,7 @@ export default function RootLayout({ children }) {
                       <Navigator />
                     </Box>
                   </Container>
-                </AppContext.Provider>
+         
               </Box>
             </SignedIn>
 
@@ -92,6 +96,7 @@ export default function RootLayout({ children }) {
               <RedirectToSignIn />
             </SignedOut>
           </Box>
+          </AppContext.Provider>
         </ClerkProvider>
       </body>
     </html>
