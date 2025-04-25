@@ -24,7 +24,7 @@ const Post = ({description,username, width,ingredients, steps,imageHeight, type,
                 <Link onClick={() => {
                     appInfo.post.changeCurrent({title,description,username,steps,ingredients});
                 }} href={{pathname:"/home/post", query:{id:"1234"}}} as={`/home/post?id=${1234}`}>
-                    <CardMedia sx={{border:"1px solid red", height:imageHeight}} component={"img"} alt="post"/>
+                    <CardMedia sx={{border:"1px solid red",width:"97%", height:imageHeight}} component={"img"} alt="post"/>
                 </Link> 
             )
         }
