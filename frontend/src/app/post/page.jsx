@@ -22,8 +22,8 @@ const Post = () => {
             },
             body: JSON.stringify({
                 title,
-                ingredients,
-                steps,
+                ingredients: ingredients.split(','),
+                steps: steps.split('\n'),
                 country,
                 description,
                 imageLink,
@@ -38,73 +38,87 @@ const Post = () => {
             setMessage("Failed to create post. Please try again.");
         }
     } // handleSubmit function ends here
+    const containerStyle = {
+        width:"auto",
+        height:"fit-content",
+        backgroundColor:"#FAADAD",
+        border:"1px solid white",
+        borderRadius:"0.5rem",
+        paddingLeft:"1.5rem",
+        paddingRight:"1.5rem",
+        paddingTop:"2%",
+        paddingBottom:"2%"
+    }
+    const innerContainerStyle = {
+        display:"flex",
+        justifyContent:"space-around",
+    }
 
     return (
-        <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-<div className="bg-[#fef2f2] border-[3px] border-[#fbcfe8] rounded-3xl p-6 w-full max-w-sm shadow-lg">
+        <Box sx={containerStyle}>
+        <Box sx={innerContainerStyle}>
 
             <h1 className="text-2xl font-bold mb-4">Create a Post</h1>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                <input 
-                    type="text" 
-                    placeholder="Title" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} 
-                    className="w-full px-3 py-2 rounded-lg boarder border-gray-300 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
-                    required
-                />
-                </div>
+                <Box>
+                    <input 
+                        type="text" 
+                        placeholder="Title" 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                        className="w-full px-3 py-2 rounded-lg boarder border-gray-300 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                        required
+                    />
+                </Box>
 
-                <div>
-                <textarea 
-                    placeholder="Ingredients (comma separated)" 
-                    value={ingredients} 
-                    onChange={(e) => setIngredients(e.target.value)} 
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                ></textarea>
-                </div>
+                <Box>
+                    <textarea 
+                        placeholder="Ingredients (comma separated)" 
+                        value={ingredients} 
+                        onChange={(e) => setIngredients(e.target.value)} 
+                        className="w-full p-2 border border-gray-300 rounded"
+                        required
+                    ></textarea>
+                </Box>
 
-                <div>
-                <textarea 
-                    placeholder="Steps" 
-                    value={steps} 
-                    onChange={(e) => setSteps(e.target.value)} 
-                    className="w-full p-2 border border-gray-300 rounded"
-                    required
-                ></textarea>
-                </div>
+                <Box>
+                    <textarea 
+                        placeholder="Steps (one step per line)" 
+                        value={steps} 
+                        onChange={(e) => setSteps(e.target.value)} 
+                        className="w-full p-2 border border-gray-300 rounded"
+                        required
+                    ></textarea>
+                </Box>
 
-                <div>
-                <input 
-                    type="text" 
-                    placeholder="Country of Origin" 
-                    value={country} 
-                    onChange={(e) => setCountry(e.target.value)} 
-                    className="w-full p-2 border border-gray-300 rounded"
-                />
-                </div>
+                <Box>
+                    <input 
+                        type="text" 
+                        placeholder="Country of Origin" 
+                        value={country} 
+                        onChange={(e) => setCountry(e.target.value)} 
+                        className="w-full p-2 border border-gray-300 rounded"
+                    />
+                </Box>
 
-                <div>
-                <textarea 
-                    placeholder="Description" 
-                    value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
-                    className="w-full p-2 border border-gray-300 rounded"
-                ></textarea>
-                </div>
+                <Box>
+                    <textarea 
+                        placeholder="Description" 
+                        value={description} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                        className="w-full p-2 border border-gray-300 rounded"
+                    ></textarea>
+                </Box>
 
-                <div>
-                <input 
-                    type="text" 
-                    placeholder="Image Link" 
-                    value={imageLink} 
-                    onChange={(e) => setImageLink(e.target.value)} 
-                    className="w-full p-2 border border-gray-300 rounded"
-                />
-                </div>
+                <Box>
+                    <input 
+                        type="text" 
+                        placeholder="Image Link" 
+                        value={imageLink} 
+                        onChange={(e) => setImageLink(e.target.value)} 
+                        className="w-full p-2 border border-gray-300 rounded"
+                    />
+                </Box>
 
                 <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
                     Post
@@ -112,9 +126,8 @@ const Post = () => {
             </form>
             {message && <p className="mt-4 text-green-500">{message}</p>}
 
-            </div>
-            </div>
-        </div>
+        </Box>
+        </Box>
     ) // return statement ends here
 
 } // Post component ends here
