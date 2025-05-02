@@ -38,9 +38,24 @@ const Post = () => {
             setMessage("Failed to create post. Please try again.");
         }
     } // handleSubmit function ends here
+
+    const outerSyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100vh",
+        margin: "0",
+        padding: "0",
+        
+    }
+
     const containerStyle = {
-        width:"auto",
-        height:"fit-content",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "800px",
+        height: "500px",
         backgroundColor:"#FAADAD",
         border:"1px solid white",
         borderRadius:"0.5rem",
@@ -49,84 +64,111 @@ const Post = () => {
         paddingTop:"2%",
         paddingBottom:"2%"
     }
+
     const innerContainerStyle = {
-        display:"flex",
-        justifyContent:"space-around",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "600px",
+        height: "400px",
+        backgroundColor: "#EBE7E7",
+        borderRadius: "0.5rem",
+        padding: "1.5rem",
+        marginTop: "1rem",
+        boxShadow: "0 10px 10px 5px rgba(0, 0, 0, 0.48)",
+    }
+
+    const inputStyle = {
+        width: "500px",
+        height: "50px",
+        padding: "10px",
+        borderRadius: "0.5rem",
     }
 
     return (
-        <Box sx={containerStyle}>
-        <Box sx={innerContainerStyle}>
+        <Box sx={outerSyle}>
+            <Box sx={containerStyle}>
+                <Box sx={innerContainerStyle}>
+                    <h1>Create a Post</h1>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <Box>
+                            <input 
+                                size={76}
+                                type="text" 
+                                placeholder="Title" 
+                                value={title} 
+                                onChange={(e) => setTitle(e.target.value)} 
+                                className="w-full px-3 py-2 rounded-lg boarder border-gray-300 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                                required
+                            />
+                        </Box>
 
-            <h1 className="text-2xl font-bold mb-4">Create a Post</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <Box>
-                    <input 
-                        type="text" 
-                        placeholder="Title" 
-                        value={title} 
-                        onChange={(e) => setTitle(e.target.value)} 
-                        className="w-full px-3 py-2 rounded-lg boarder border-gray-300 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
-                        required
-                    />
+                        <Box>
+                            <textarea 
+                                style={inputStyle}
+                                placeholder="Ingredients (comma separated)" 
+                                value={ingredients} 
+                                onChange={(e) => setIngredients(e.target.value)} 
+                                className="w-full p-2 border border-gray-300 rounded"
+                                required
+                            ></textarea>
+                        </Box>
+
+                        <Box>
+                            <textarea 
+                                style={inputStyle}
+                                placeholder="Steps (one step per line)" 
+                                value={steps} 
+                                onChange={(e) => setSteps(e.target.value)} 
+                                className="w-full p-2 border border-gray-300 rounded"
+                                required
+                            ></textarea>
+                        </Box>
+
+                        <Box>
+                            <input 
+                                size={76}
+                                type="text" 
+                                placeholder="Country of Origin" 
+                                value={country} 
+                                onChange={(e) => setCountry(e.target.value)} 
+                                className="w-full p-2 border border-gray-300 rounded"
+                            />
+                        </Box>
+
+                        <Box>
+                            <textarea 
+                                style={inputStyle}
+                                placeholder="Description" 
+                                value={description} 
+                                onChange={(e) => setDescription(e.target.value)} 
+                                className="w-full p-2 border border-gray-300 rounded"
+                            ></textarea>
+                        </Box>
+
+                        <Box>
+                            <input 
+                                size={76}
+                                type="text" 
+                                placeholder="Image Link" 
+                                value={imageLink} 
+                                onChange={(e) => setImageLink(e.target.value)} 
+                                className="w-full p-2 border border-gray-300 rounded"
+                            />
+                        </Box>
+                        
+                        <Box display="flex" justifyContent="center" alignItems="center">
+                            <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+                                Post
+                            </button>
+                        </Box>
+                        
+                    </form>
+                    {message && <p className="mt-4 text-green-500">{message}</p>}
+
                 </Box>
-
-                <Box>
-                    <textarea 
-                        placeholder="Ingredients (comma separated)" 
-                        value={ingredients} 
-                        onChange={(e) => setIngredients(e.target.value)} 
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                    ></textarea>
-                </Box>
-
-                <Box>
-                    <textarea 
-                        placeholder="Steps (one step per line)" 
-                        value={steps} 
-                        onChange={(e) => setSteps(e.target.value)} 
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                    ></textarea>
-                </Box>
-
-                <Box>
-                    <input 
-                        type="text" 
-                        placeholder="Country of Origin" 
-                        value={country} 
-                        onChange={(e) => setCountry(e.target.value)} 
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </Box>
-
-                <Box>
-                    <textarea 
-                        placeholder="Description" 
-                        value={description} 
-                        onChange={(e) => setDescription(e.target.value)} 
-                        className="w-full p-2 border border-gray-300 rounded"
-                    ></textarea>
-                </Box>
-
-                <Box>
-                    <input 
-                        type="text" 
-                        placeholder="Image Link" 
-                        value={imageLink} 
-                        onChange={(e) => setImageLink(e.target.value)} 
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                </Box>
-
-                <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-                    Post
-                </button>
-            </form>
-            {message && <p className="mt-4 text-green-500">{message}</p>}
-
-        </Box>
+            </Box>
         </Box>
     ) // return statement ends here
 
