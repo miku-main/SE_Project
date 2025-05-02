@@ -1,27 +1,136 @@
 'use client'
 import { Box } from "@mui/material";
+import { set } from "mongoose";
 import { useState } from "react";
 
+const Post = () => {
+    const [title, setTitle] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [steps, setSteps] = useState("");
+    const [country, setCountry] = useState("");
+    const [description, setDescription] = useState("");
+    const [imageLink, setImageLink] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const res = await fetch("/api/post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title,
+                ingredients,
+                steps,
+                country,
+                description,
+                imageLink,
+            }),
+        });
+        
+        if (res.ok) {
+            setMessage("Post created successfully!");
+            setImageLink("");
+            setDescription("");
+        } else {
+            setMessage("Failed to create post. Please try again.");
+        }
+    } // handleSubmit function ends here
+
+    return (
+        <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+<div className="bg-[#fef2f2] border-[3px] border-[#fbcfe8] rounded-3xl p-6 w-full max-w-sm shadow-lg">
+
+            <h1 className="text-2xl font-bold mb-4">Create a Post</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div>
+                <input 
+                    type="text" 
+                    placeholder="Title" 
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
+                    className="w-full px-3 py-2 rounded-lg boarder border-gray-300 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                    required
+                />
+                </div>
+
+                <div>
+                <textarea 
+                    placeholder="Ingredients (comma separated)" 
+                    value={ingredients} 
+                    onChange={(e) => setIngredients(e.target.value)} 
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                ></textarea>
+                </div>
+
+                <div>
+                <textarea 
+                    placeholder="Steps" 
+                    value={steps} 
+                    onChange={(e) => setSteps(e.target.value)} 
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                ></textarea>
+                </div>
+
+                <div>
+                <input 
+                    type="text" 
+                    placeholder="Country of Origin" 
+                    value={country} 
+                    onChange={(e) => setCountry(e.target.value)} 
+                    className="w-full p-2 border border-gray-300 rounded"
+                />
+                </div>
+
+                <div>
+                <textarea 
+                    placeholder="Description" 
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)} 
+                    className="w-full p-2 border border-gray-300 rounded"
+                ></textarea>
+                </div>
+
+                <div>
+                <input 
+                    type="text" 
+                    placeholder="Image Link" 
+                    value={imageLink} 
+                    onChange={(e) => setImageLink(e.target.value)} 
+                    className="w-full p-2 border border-gray-300 rounded"
+                />
+                </div>
+
+                <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+                    Post
+                </button>
+            </form>
+            {message && <p className="mt-4 text-green-500">{message}</p>}
+
+            </div>
+            </div>
+        </div>
+    ) // return statement ends here
+
+} // Post component ends here
+export default Post;
+
+
+// Use the code below if we are adding the clod provider and choosing 
+// images from the local system
+/*
 const Post = () => {
     // for storing image file and description
     const [images, setImages] = useState([]);
     const [description, setDescription] = useState("");
     const [imageIndex, setimageIndex] = useState(null);
 
-    // to handle selecting image
-    /*
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImage(file);   
-            const reader = new FileReader();
-            reader.onloaded = () => {
-                setPreviewImage(reader.result);
-            }
-            reader.readAsDataURL(file);
-        }
-    }
-    */
+
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         const previews = [];
@@ -47,7 +156,7 @@ const Post = () => {
     }
 
     // for handling form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // 
         const selectedImage = images[imageIndex];
@@ -57,6 +166,7 @@ const Post = () => {
         setImages([]);
         setDescription("");
         setimageIndex("");
+
     }
 
     return(
@@ -154,3 +264,4 @@ const Post = () => {
 }
 
 export default Post;
+*/

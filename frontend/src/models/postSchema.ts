@@ -4,6 +4,7 @@ interface IPost extends Document {
     username:string;
     likes:number;
     description:string;
+    image:string;
     title:string;
     ingredients:Array<string>;
     steps:Array<string>;
@@ -21,6 +22,10 @@ const postSchema = new Schema<IPost>({
     },
     description:{
         type:String
+    },
+    image:{
+        type:String,
+        required:true
     },
     title:{
         type:String,
