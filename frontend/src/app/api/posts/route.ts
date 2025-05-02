@@ -10,8 +10,8 @@ export const GET = async (request: NextRequest) => {
 }
 
 export const POST = async (request: NextRequest) => {
-    const {username, description,image, title, country} = await request.json();
+    const {username, description, image, title, steps, ingredients, country} = await request.json();
     await connectMongoDB();
-    await Post.create({username,description,image,title,likes:0,country})
+    await Post.create({username,description,image,title,likes:0,steps,ingredients,country})
     return NextResponse.json({message:"Post added", status:201})
 }

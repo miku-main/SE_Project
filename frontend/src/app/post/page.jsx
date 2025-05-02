@@ -15,12 +15,14 @@ const Post = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch("/api/post", {
+        const res = await fetch("/api/posts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                username: "Anonymous",
+                likes: 0,
                 title,
                 ingredients: ingredients.split(','),
                 steps: steps.split('\n'),
@@ -153,7 +155,7 @@ const Post = () => {
                                 type="text" 
                                 placeholder="Image Link" 
                                 value={imageLink} 
-                                onChange={(e) => setImageLink(e.target.value)} 
+                                onChange={(e) => setImage(e.target.value)} 
                                 className="w-full p-2 border border-gray-300 rounded"
                             />
                         </Box>
