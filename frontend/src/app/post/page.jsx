@@ -15,7 +15,7 @@ const Post = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch("/api/posts", {
+        const res = await fetch("/src/app/api/posts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +28,9 @@ const Post = () => {
                 steps: steps.split('\n'),
                 country,
                 description,
-                imageLink,
+                image:imageLink,
+                username:"value",
+                likes:0
             }),
         });
         
