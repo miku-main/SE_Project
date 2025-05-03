@@ -157,7 +157,7 @@ const Post = () => {
                                 type="text" 
                                 placeholder="Image Link" 
                                 value={imageLink} 
-                                onChange={(e) => setImage(e.target.value)} 
+                                onChange={(e) => setImageLink(e.target.value)} 
                                 className="w-full p-2 border border-gray-300 rounded"
                             />
                         </Box>
