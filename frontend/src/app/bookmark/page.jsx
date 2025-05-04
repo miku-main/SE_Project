@@ -67,20 +67,6 @@ const Bookmark = () => {
                     )}
                 </Grid>
             </Box>
-
-            {/* Bottom Navigation */}
-            <BottomNavigation
-                value={navValue}
-                onChange={(event, newValue) => setNavValue(newValue)}
-                showLabels
-                sx={{ boxShadow: '0 -2px 5px rgba(0,0,0,0.1)', borderTop: '1px solid #ddd' }}
-            >
-                <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-                <BottomNavigationAction label="Post" icon={<AddBoxIcon />} />
-                <BottomNavigationAction label="Bookmarks" icon={<BookmarkIcon />} />
-                <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
-                <BottomNavigationAction label="Groups" icon={<GroupIcon />} />
-            </BottomNavigation>
         </Box>
     );
 };
